@@ -92,35 +92,65 @@ git --global config user.email
 
 ### Docker
 
-#### install
+#### install（`Mac`）
 
-基本的に`Docker Desktop`を使うのが丸いです。（が、`windows`で`WSL` + `Docker Desktop`を動かそうとすると、）
+`Mac`の場合は`Docker Desktop`を使います。
+`windows`でも使えますが、`WSL` + `Docker Desktop`を動かそうとするとメモリ消費が激しく、16GBでも足りない場合があります。
+
 [公式サイト](https://www.docker.com/products/docker-desktop/)よりインストールしてください。
 なお`WSL`の場合もインストールするのは`windows`版です。
+
 
 ```shell
 docker version # 確認
 ```
 
+#### install（`win`, `Linux`）
 
-#### Tips (`Win`)
+[公式ドキュメント](https://docs.docker.com/engine/install/ubuntu/)よりコピペ
 
-ただ`WSL` + `Docker Desktop`の環境だと、莫大なメモリ消費を起こす場合があります。回避方法としては
-1. Docker Desktopを使わない（[公式ドキュメント](https://docs.docker.com/engine/install/ubuntu/)）
-2. 使用可能メモリを制限する（[WSL2によるホストのメモリ枯渇を防ぐための暫定対処](https://qiita.com/yoichiwo7/items/e3e13b6fe2f32c4c6120)）
+```shell
 
-などがあります。
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+```
+
+
+```shell
+docker version # 確認
+```
+
+#### Tips（`win`）
+
+WSLのメモリ消費が激しい場合、以下のような対策があります。
+[WSL2によるホストのメモリ枯渇を防ぐための暫定対処](https://qiita.com/yoichiwo7/items/e3e13b6fe2f32c4c6120)
 
 
 ### VScode
 
 #### install
 
-[公式サイト](https://code.visualstudio.com/download)より自身の環境に合ったものをインストールしてください。なお`WSL`の場合もインストールするのは`windows`版です。
+[公式サイト](https://code.visualstudio.com/download)より自身の環境に合ったものをインストールしてください。
+なお`WSL`の場合もインストールするのは`windows`版です。
 
 #### Settings (`Win`)
 
-`VScode`で`wsl`のターミナルを開くと、`.profile`が読み込まれないことがあります。
+`VScode`で`WSL`のターミナルを開くと、`.profile`が読み込まれないことがあります。
 
 1. `Ctrl + ,` で設定画面を開く
 2. `terminal integrated profile linux`と検索し、`setting.jsonで編集`をクリック
@@ -134,64 +164,25 @@ docker version # 確認
     },
 ```
 
+#### Tips   
 
-## 2. Frontend
+`VScode`には拡張機能が豊富にあります。以下の拡張機能をインストールしておくと便利です。
 
-Frontendは`docker`ではなく別途環境を作っています。
-
-### asdf
-
-
-```shell
-asdf --version  # 確認
-brew install asdf
-```
-
-[公式ドキュメント](https://asdf-vm.com/guide/getting-started.html#_3-install-asdf)の「3. Install asdf」欄から自身の環境のものを選んで、pathを通す。（特に変更していない場合、`WSL`の場合は`Bash & Homebrew`、`Mac`の場合は`ZSH & Homebrew`）
-
-
-### Node
-
-```shell
-echo -e "yarn\nnpm-check-updates" >> ~/.default-npm-packages    # nodeのデフォルトパッケージの指定
-exec $SHELL -l
-asdf plugin add nodejs
-asdf install nodejs latest
-asdf global nodejs latest
-node -v # 確認
-```
-
+- `WSL`：`WSL`上で`VScode`を開く機能で、`win`ユーザーは必須です。
+- `Japanese Language Pack for Visual Studio Code`：日本語化
+- `GitLens`：`git`の情報を表示
+- `GitHub Copilot`：AIによるコード補完
+- `Draw.io Integration`：Draw.ioを`VScode`上で使える
+- `Markdown All in One`：`markdown`のプレビュー機能
 
 
 ## 3. Project Initialization
 
+#### リポジトリのクローン
 
 ```shell
-git clone git@github.com:oginoshikibu/wikipedia-golf.git
-cd wikipedia-golf.git
-
-cp .env.example .env    # 必要な場合は別途編集
-
-# Composer依存関係のインストール
-# ref: https://readouble.com/laravel/10.x/ja/sail.html
-docker run --rm \
-    -u "$(id -u):$(id -g)" \
-    -v "$(pwd):/var/www/html" \
-    -w /var/www/html \
-    laravelsail/php82-composer:latest \
-    composer install --ignore-platform-reqs
-
-# コンテナの起動
-echo "alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'" >> ~/.bashrc
-exec $SHELL -l
-sail up -d
-# アプリケーションキーの作成
-sail artisan key:generate
-sail artisan migrate
-
-# npm依存関係のインストール
-yarn
-# run: http://localhost
-yarn dev
-
+git clone git@github.com:TUS-OSK/quantum-gomoku.git
+cd quantum-gomoku
 ```
+
+WIP
