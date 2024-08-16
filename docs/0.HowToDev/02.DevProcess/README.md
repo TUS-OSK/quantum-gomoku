@@ -7,7 +7,7 @@
 
 ### 1. タスクの割り振り
 
-基本的にタスク管理は[github issues](https://github.com/TUS-OSK/team-dev/issues)で行います。気になったタスクがあれば@oginoshikibu に聞いてください。特になければ相談の上割り振ります。
+基本的にタスク管理は[github issues](https://github.com/TUS-OSK/quantum-gomoku/issues)で行います。気になったタスクがあれば@oginoshikibu に聞いてください。特になければ相談の上割り振ります。
 
 
 ### 2. localでの作業
@@ -52,9 +52,9 @@
 
 ### 3. ブラウザ上での作業
 
-[Git Hub](https://github.com/TUS-OSK/team-dev)を開いて`PR`(`Pull Request`)を出します。
+[Git Hub](https://github.com/TUS-OSK/quantum-gomoku)を開いて`PR`(`Pull Request`)を出します。
 
-1. [Git Hub](https://github.com/TUS-OSK/team-dev)を開くと、上部に先ほど`push`したブランチ名が記載された以下のようなボタンが現れるのでクリック
+1. [Git Hub](https://github.com/TUS-OSK/quantum-gomoku)を開くと、上部に先ほど`push`したブランチ名が記載された以下のようなボタンが現れるのでクリック
 2. 以下各項目の設定をする
    - `merge`先が`develop`ブランチで、`merge`可能の表記が出ているか確認
    - `title`欄を適切なものに変更
@@ -92,7 +92,7 @@ wip
 
 ### 1. Draftを外してreview依頼
 
-[PR](https://github.com/TUS-OSK/team-dev/pulls)より自分の`PR`を選択し、グレーの`Ready for review`ボタンを押す。discordの`#dev-連絡`でreviewerにメンションつけてもらえると助かります。
+[PR](https://github.com/TUS-OSK/quantum-gomoku/pulls)より自分の`PR`を選択し、グレーの`Ready for review`ボタンを押す。discordの`#dev-連絡`でreviewerにメンションつけてもらえると助かります。
 
 ### 2. review内容を確認・修正
 
