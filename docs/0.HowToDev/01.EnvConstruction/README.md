@@ -7,15 +7,15 @@
 ### `WSL2`のインストール
 旧wslは設定をいじる必要がありましたが、現在は以下のコマンド一つでinstallすることが出来ます。
 
+PoerShellを管理者権限で起動し、以下のコマンドを実行してください。
 ```powershell
 wsl -l -v   # 既にインストールされていないか確認
 wsl --install
 ```
 
 詳細については[公式サイト](https://learn.microsoft.com/ja-jp/windows/wsl/install)を確認してください。またOSやそのversionについては、`Ubuntu LTS`であれば問題ないと思います。
-
 何かトラブルが生じた際には、再installをまずは試すと良いです。
-
+以降の手順は`wsl2: ubuntu`上で行うことを前提としています。
 `Ubuntu`アプリを直接起動するか、`PowerShell`や`command prompt`、`git bash`などで`ubuntu`といったコマンドでも起動することが出来ます。
 
 以下のセクションでは`Mac`及び`Windows(wsl2: ubuntu)`どちらでも同じ操作で問題ありません。ただターミナルの違い（`Mac`のデフォルトは`zsh`、`Ubuntu`のデフォルトは`bash`）などから若干の違いがあります。括弧付けで (`Mac`)  (`Win`) と表記するので、自身の環境に合ったものを実行してください。
@@ -75,8 +75,8 @@ mkdir ~/.ssh
 cd ~/.ssh
 ssh-keygen -t ed25519 -f ed25519_github
 cat ed25519_github.pub
-> # 出力を https://github.com/settings/ssh/new に張り付ける
-echo -e "Host github.com\n\tHostName github.com\n\tIdentityFile\n\t ~/.ssh/ed25519_github\n\tUser git" >> ~/.ssh/config
+> # 出力を https://github.com/settings/ssh/new のkeyに張り付ける
+echo -e "Host github.com\n\tHostName github.com\n\tIdentityFile ~/.ssh/ed25519_github\n\tUser git" >> ~/.ssh/config
 ssh -T git@github.com   # 疎通確認
 > # githubのユーザー名が表示されれば成功
 ```
@@ -84,8 +84,8 @@ ssh -T git@github.com   # 疎通確認
 #### config
 
 ```shell
-git --global config user.name <username>
-git --global config user.email
+git config --global user.name <githubアカウントのユーザー名>
+git config --global user.email <githubアカウントのemail>
 ```
 
 リポジトリ毎に設定したい場合は、`clone`後リポジトリ内で上記コマンドの`--global`オプションを`--local`に変えて実行してください。
