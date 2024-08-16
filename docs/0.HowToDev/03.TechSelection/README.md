@@ -30,7 +30,7 @@
   - Web framework
   - goライブラリの中ではシェア率が一番高くドキュメントや記事も充実しているため採用
 
-## DateBase
+## DataBase
 - [PostgreSQL](https://www.postgresql.org/)
   - 暫定候補としてのDBのため変更可(他にもMySQLやSQLiteなどあり)
 - ORM候補として下記記事参考に
