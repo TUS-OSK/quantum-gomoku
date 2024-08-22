@@ -1,5 +1,7 @@
 # 01.Screen State Transition
 
+## ゲームプレイ画面
+
 ```mermaid
 graph TD;
     A("訪れる")-->B["ゲーム開始ボタンを押す"]
