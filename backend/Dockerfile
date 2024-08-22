@@ -1,5 +1,6 @@
 FROM golang:latest
 
+RUN go install github.com/air-verse/air@latest
 WORKDIR /app
 
 COPY . .
@@ -10,5 +11,4 @@ RUN go build -o main .
 
 EXPOSE 8080
 
-CMD ["go", "run", "main.go"]
-
+CMD ["air", "-c", ".air.toml"]
