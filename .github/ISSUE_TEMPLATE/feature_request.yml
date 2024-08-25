@@ -31,4 +31,4 @@ body:
           - before/after(どのような変更かを画像や動画などで補足するとより良い)
           - どういったテストで検証されるか(可能であれば)
     validations:
-      required: true
+      required: false
