@@ -12,8 +12,7 @@ body:
       description: "詳細を記述してください。"
       placeholder: |
         以下のようなことを添えて記述してください。
-        - issue number
-          - 例: fixed #123
+        - issue number(関連するissueがあれば)
         - 問題点(対応内容・対応背景・妥協点)
         - その他(参考リンクや注意点や補足事項等)
     validations:
@@ -28,7 +27,7 @@ body:
         3. パスワードを入力
         4. ログインボタンをクリックするも、ログインできない
     validations:
-      required: true
+      required: false
   - type: textarea
     attributes:
       label: "Expected behavior"
@@ -42,7 +41,7 @@ body:
         - npm version etc...
         - その他(参考リンクや注意点や補足事項等)
     validations:
-      required: true
+      required: false
   - type: textarea
     attributes:
       label: "Logs"
