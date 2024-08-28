@@ -1,0 +1,54 @@
+name: Bug Report
+description: "バグの報告"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        [Issueの立て方](https://github.com/TUS-OSK/quantum-gomoku/tree/develop/docs/0.HowToDev/02.DevProcess#issue%E3%81%AE%E7%AB%8B%E3%81%A6%E6%96%B9)を参考に記述してください。
+  - type: textarea
+    attributes:
+      label: "Problem"
+      description: "詳細を記述してください。"
+      placeholder: |
+        以下のようなことを添えて記述してください。
+        - issue number(関連するissueがあれば)
+        - 問題点(対応内容・対応背景・妥協点)
+        - その他(参考リンクや注意点や補足事項等)
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Steps to reproduce"
+      description: "再現手順を記述してください。"
+      placeholder: |
+        1. ログインボタンをクリック
+        2. ユーザ名を入力
+        3. パスワードを入力
+        4. ログインボタンをクリックするも、ログインできない
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: "Expected behavior"
+      description: |
+        どのような挙動が期待されるかなど詳細な情報を記述してください。
+      placeholder: |
+        以下のようなことを添えて記述してください。
+        - 期待される挙動
+          - before/after(どのような変更かを画像や動画などで補足するとより良い)
+          - どういったテストで検証されるか(可能であれば)
+        - npm version etc...
+        - その他(参考リンクや注意点や補足事項等)
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: "Logs"
+      description: "ログを記述してください。"
+      placeholder: |
+        以下のようなことを添えて記述してください。
+        - F12(Developer Tools)のConsoleタブのログ
+        - npm run devの実行ログ etc...
+    validations:
+      required: false
