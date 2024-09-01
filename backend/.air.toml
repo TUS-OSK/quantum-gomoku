@@ -1,4 +1,5 @@
 # This file is the configuration file for Air.
+# created by the command `air init`. (Comments are added for the modifications)
 # official example: https://github.com/air-verse/air/blob/master/air_example.toml
 
 root = "."
@@ -9,7 +10,7 @@ tmp_dir = "tmp"
   args_bin = []
   bin = "./tmp/main"
   cmd = "go build -o ./tmp/main ."
-  delay = 500
+  delay = 300   # default 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
   exclude_file = []
   exclude_regex = ["_test.go"]
@@ -43,6 +44,11 @@ tmp_dir = "tmp"
 
 [misc]
   clean_on_exit = false
+
+[proxy]
+  app_port = 0
+  enabled = false
+  proxy_port = 0
 
 [screen]
   clear_on_rebuild = false
