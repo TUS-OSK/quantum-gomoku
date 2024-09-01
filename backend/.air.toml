@@ -1,3 +1,6 @@
+# This file is the configuration file for Air.
+# official example: https://github.com/air-verse/air/blob/master/air_example.toml
+
 root = "."
 testdata_dir = "testdata"
 tmp_dir = "tmp"
