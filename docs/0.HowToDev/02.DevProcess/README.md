@@ -60,9 +60,9 @@
    - `merge`先が`develop`ブランチで、`merge`可能の表記が出ているか確認
    - `title`欄を適切なものに変更
    - `Description`欄に`Close #<issue番号>`を記載する。`#`を入力すると、サジェストが効きくので、`front`や`docs`など担当の`issue`名に含まれる単語を打つのが早いと思います。
-   - `Reviewers`に@oginoshikibu を追加
+   - `Reviewers`に適切なreviewerを追加
    - `Assignees`に自身を追加
-   - `Milestone`に`ベータ版開発`を追加
+   - `Milestone`に該当のマイルストーンをを追加
 3. 緑色ボタン`Create Pull Request`の右にある三角を押し、`Draft`を選択
 
 ![PR設定項目](PR_settings.png)
@@ -94,6 +94,9 @@ wip
 ### 1. Draftを外してreview依頼
 
 [PR](https://github.com/TUS-OSK/quantum-gomoku/pulls)より自分の`PR`を選択し、グレーの`Ready for review`ボタンを押す。discordの`#gomoku-連絡`でreviewerにメンションつけてもらえると助かります。
+もし`develop`ブランチが更新されたことによりコンフリクトが起きそう、file changedが見づらくなっているのであれば、`git rebase`で変更を取り込み、`git push --force`してからreview依頼を送るとよいと思います。ただgit hubの仕様上、`force push`してしまうとコメントが吹っ飛んでしまうので、注意してください。回避方法は`git merge`するしかない気がしています。
+
+またこの時、タイトルや説明を詳しく書くよう心掛けてください。
 
 ### 2. review内容を確認・修正
 
