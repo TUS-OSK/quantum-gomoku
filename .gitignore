@@ -23,6 +23,3 @@ go.work.sum
 
 # env file
 .env
-
-# Go Air binary
-backend/tmp/main
