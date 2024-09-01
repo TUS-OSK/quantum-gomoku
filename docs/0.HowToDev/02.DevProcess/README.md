@@ -94,7 +94,7 @@ wip
 ### 1. Draftを外してreview依頼
 
 [PR](https://github.com/TUS-OSK/quantum-gomoku/pulls)より自分の`PR`を選択し、グレーの`Ready for review`ボタンを押す。discordの`#gomoku-連絡`でreviewerにメンションつけてもらえると助かります。
-もし`develop`ブランチが更新されたことによりコンフリクトが起きそう、file changedが見づらくなっているのであれば、`git rebase`で変更を取り込み、`git push --force`してからreview依頼を送るとよいと思います。ただgit hubの仕様上、`force push`してしまうとコメントが吹っ飛んでしまうので、注意してください。回避方法は`git merge`するしかない気がしています。
+コンフリクトの修正は気合です。頑張ってください。
 
 またこの時、タイトルや説明を詳しく書くよう心掛けてください。
 
