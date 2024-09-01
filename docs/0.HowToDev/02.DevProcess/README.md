@@ -94,7 +94,7 @@ wip
 ### 1. Draftを外してreview依頼
 
 [PR](https://github.com/TUS-OSK/quantum-gomoku/pulls)より自分の`PR`を選択し、グレーの`Ready for review`ボタンを押す。discordの`#gomoku-連絡`でreviewerにメンションつけてもらえると助かります。
-コンフリクトの修正は気合です。頑張ってください
+コンフリクトの修正は気合です。頑張ってください。
 
 またこの時、タイトルや説明を詳しく書くよう心掛けてください。
 
