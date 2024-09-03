@@ -1,5 +1,5 @@
 // 愚直に全探索することで勝者を判定する関数
-// 酷い実装なので、五目の勝利判定のアルゴリzむを調べて実装し直す予定
+// TODO:酷い実装なので、五目の勝利判定のアルゴリzむを調べて実装し直す予定
 export function calculateWinner(squares: Array<string | null>): string | null {
   const boardSize = 19;
   const lines = [];
