@@ -5,7 +5,7 @@ export default function Header() {
         <h1 className="font-bold text-black tracking-wide text-2xl">
           Quantum Gomoku
         </h1>
-        <button className="font-bold bg-black text-white hover:bg-gray-600">LOGIN</button>
+        <button className="font-bold m-5 p-2 bg-black text-white rounded hover:bg-gray-600">LOGIN</button>
       </div>
     </header>
   );

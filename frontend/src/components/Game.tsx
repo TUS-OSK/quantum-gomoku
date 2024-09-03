@@ -44,7 +44,7 @@ export default function Game() {
     <div>
       <div className="flex justify-center">
         <button
-          className="m-5 p-2 bg-black text-white rounded"
+          className="m-5 p-2 bg-black text-white rounded hover:bg-gray-600"
           onClick={resetGame}
         >
           Reset
