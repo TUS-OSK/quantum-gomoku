@@ -1,19 +1,57 @@
 import Stone from './Stone';
+import { calculateWinner } from '../utils/calculateWinner';
 
-const BoardSize = 19;
+interface BoardProps {
+  xIsNext: boolean;
+  stones: Array<string | null>;
+  onPlay: (stones: Array<string | null>) => void;
+}
 
-export default function Board() {
+export default function Board({ xIsNext, stones, onPlay }: BoardProps) {
+  const boardSize = 19;
+
+  function handleClick(i: number) {
+    if (calculateWinner(stones) || stones[i]) {
+      return;
+    }
+    const nextStones = stones.slice();
+    if (xIsNext) {
+      nextStones[i] = 'X';
+    } else {
+      nextStones[i] = 'O';
+    }
+    onPlay(nextStones);
+  }
+
+  const winner = calculateWinner(stones);
+  let status;
+  if (winner) {
+    status = 'Winner: ' + winner;
+  } else {
+    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+  }
+
+  // TODO: これは酷い実装なので、リファクタリング(関数型プログラミングらしく)
+  const boardRows = [];
+  for (let row = 0; row < boardSize; row++) {
+    const rowStones = [];
+    for (let col = 0; col < boardSize; col++) {
+      const index = row * boardSize + col;
+      rowStones.push(
+        <Stone key={index} value={stones[index]} onStoneClick={() => handleClick(index)} />
+      );
+    }
+    boardRows.push(
+      <div key={row} className="clear-both table">
+        {rowStones}
+      </div>
+    );
+  }
+
   return (
     <>
-      {Array(BoardSize).fill(0).map((_, row) => (
-        <div className="clear-both table" key={row}>
-          {Array(BoardSize).fill(0).map((_, col) => (
-            <Stone
-              key={row * BoardSize + col}
-            />
-          ))}
-        </div>
-      ))}
+      <div className="mb-2">{status}</div>
+      {boardRows}
     </>
   );
 }
