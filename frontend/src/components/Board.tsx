@@ -50,7 +50,7 @@ export default function Board({ xIsNext, stones, onPlay }: BoardProps) {
 
   return (
     <>
-      <div className="mb-2">{status}</div>
+      <div className="mb-2 flex justify-center items-center">{status}</div>
       {boardRows}
     </>
   );
