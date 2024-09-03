@@ -14,6 +14,12 @@ export default function Game() {
     setCurrentMove(nextHistory.length - 1);
   }
 
+  function resetGame() {
+    setHistory([Array(boardSize * boardSize).fill(null)]);
+    setCurrentMove(0);
+  }
+
+
   // 履歴ジャンプ機能だが、現状は不要なのでコメントアウト
   // TODO: Tailwind CSS でスタイリングでのレスポンシブ対応必要
   // function jumpTo(nextMove: number) {
@@ -35,13 +41,24 @@ export default function Game() {
   // });
 
   return (
-    <div className="flex flex-row">
+    <div>
+      <div className="flex justify-center">
+        <button
+          className="m-5 p-2 bg-black text-white rounded"
+          onClick={resetGame}
+        >
+          Reset
+        </button>
+      </div>
       <div className="ml-5">
         <Board
           xIsNext={xIsNext}
           stones={currentStones}
           onPlay={handlePlay}
         />
+      </div>
+      <div className="flex justify-center">
+        {/* <ol>{moves}</ol> */}
       </div>
     </div>
   );
