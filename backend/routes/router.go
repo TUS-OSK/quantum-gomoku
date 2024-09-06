@@ -11,17 +11,12 @@ func GetRouter() *gin.Engine {
 	{
 		users := api.Group("/users")
 		{
-			users.GET("/", func(c *gin.Context) {
-				c.JSON(200, gin.H{
-					"message": "All users",
-				})
-			}
-			)
 		}
 
 		friends := api.Group("/friends")
 		{
 		}
+	}
 
 	}
 
