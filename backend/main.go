@@ -1,9 +1,7 @@
 package main
 
 import (
-	"net/http"
-	"github.com/gin-gonic/gin"
-	"backend/routes"
+	"gomoku/routes"
 )
 
 func main() {

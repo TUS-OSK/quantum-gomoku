@@ -1,4 +1,4 @@
-module backend
+module gomoku
 
 go 1.22.6
 
