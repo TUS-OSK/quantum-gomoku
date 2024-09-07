@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 // FriendsController is a struct to define the friends controller
@@ -14,9 +15,16 @@ func NewFriendsController() *FriendsController {
 }
 
 
+// GetFriendsResponse is a struct to define the get friends response
+type GetFriendsResponse struct {
+	Message string `json:"message"`
+}
+
 // GetFriends is a function to handle the get friends request
 func (controller *FriendsController) GetFriends(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "Get Friends",
-	})
+
+	var response GetFriendsResponse
+	response.Message = "Get friends successful"
+	c.JSON(http.StatusOK, response)
+	return
 }
