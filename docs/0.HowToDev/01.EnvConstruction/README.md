@@ -140,6 +140,22 @@ docker version # 確認
 WSLのメモリ消費が激しい場合、以下のような対策があります。
 [WSL2によるホストのメモリ枯渇を防ぐための暫定対処](https://qiita.com/yoichiwo7/items/e3e13b6fe2f32c4c6120)
 
+### Go（backend開発者のみ）
+
+実行自体は`docker`で行いますが、editorでの補完などを効かせるために`Go`をインストールします。
+
+> [!TIP] `docker container`内で開発を行うことにより、実行環境と開発環境を一致させることができます。
+> しかしながら、backendの`docker`のrootディレクトリは`backend`となっており、`.git`が含まれないため別windowで`git`操作を行う必要があります。
+> `repository`をfrontendとbackendで分けることで解消できますが、そのような大きな変更を実施するほどのインセンティブはないと考えているため、localに`Go`をインストールすることを推奨します。
+ 
+#### install
+
+```shell
+go version # 既にインストールされていないか確認
+brew install go@1.23
+go version   # 確認
+```
+vscodeの拡張機能で`Go`をインストールしてください。
 
 ### VScode
 
