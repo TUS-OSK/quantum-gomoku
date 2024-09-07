@@ -16,9 +16,11 @@ func GetRouter() *gin.Engine {
 			users.POST("/login", loginController.Login)
 		}
 
-		// friends := api.Group("/friends")
-		// {
-		// }
+		friends := api.Group("/friends")
+		{
+			friendsController := controllers.NewFriendsController()
+			friends.GET("/", friendsController.GetFriends)
+		}
 	}
 
 	return router
