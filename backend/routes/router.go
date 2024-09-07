@@ -12,13 +12,13 @@ func GetRouter() *gin.Engine {
 	{
 		users := api.Group("/users")
 		{
+			loginController := controllers.NewLoginController()
+			users.POST("/login", loginController.Login)
 		}
 
-		friends := api.Group("/friends")
-		{
-		}
-	}
-
+		// friends := api.Group("/friends")
+		// {
+		// }
 	}
 
 	return router
