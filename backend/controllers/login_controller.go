@@ -35,5 +35,4 @@ func (controller *LoginController) Login(c *gin.Context) {
 	var response LoginResponse
 	response.Message = "Login successful"
 	c.JSON(http.StatusOK, response)
-	return
 }

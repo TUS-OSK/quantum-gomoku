@@ -26,5 +26,4 @@ func (controller *FriendsController) GetFriends(c *gin.Context) {
 	var response GetFriendsResponse
 	response.Message = "Get friends successful"
 	c.JSON(http.StatusOK, response)
-	return
 }
