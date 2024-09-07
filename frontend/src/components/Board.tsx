@@ -32,6 +32,8 @@ export default function Board({ xIsNext, stones, onPlay }: BoardProps) {
   }
 
   // TODO: これは酷い実装なので、リファクタリング(関数型プログラミングらしく)
+  // keyもindexだとエンタングルの際に問題が起きるので、要検討
+  //
   const boardRows = [];
   for (let row = 0; row < boardSize; row++) {
     const rowStones = [];
