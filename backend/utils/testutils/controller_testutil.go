@@ -2,31 +2,22 @@ package testutils
 
 import (
 	"encoding/json"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/gin-gonic/gin"
 )
 
-type Request struct {
-	Method string
-	Url    string
-	Body   map[string]interface{}
+
+type ControllerTestCase struct {
+	Name     string
+	Request  HTTPRequest
+	Response HTTPResponse
 }
 
-type Response struct {
-	Code int
-	Body map[string]interface{}
-}
-
-type TestCase struct {
-	Name    string
-	Request Request
-	Response Response
-}
-
-func RunControllerTest(t *testing.T, tests []TestCase, createController func() gin.HandlerFunc) {
+func RunControllerTest(t *testing.T, tests []ControllerTestCase, createController func() gin.HandlerFunc) {
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
 			response := httptest.NewRecorder()

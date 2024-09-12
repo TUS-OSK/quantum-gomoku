@@ -1,25 +1,24 @@
 package controllers
 
 import (
+	"gomoku/utils/testutils"
 	"net/http"
 	"testing"
+
 	"github.com/gin-gonic/gin"
-	"gomoku/utils/testutils"
 )
 
 func TestLoginController_Login(t *testing.T) {
 
-	tests := []testutils.TestCase{
+	tests := []testutils.ControllerTestCase{
 		{
 			Name: "Test case 1: Success",
-			Request: testutils.Request{
-				Method: http.MethodPost,
-				Url:    "api/v1/users/login",
+			Request: testutils.HTTPRequest{
 				Body: map[string]interface{}{
 					"message": "Hello",
 				},
 			},
-			Response: testutils.Response{
+			Response: testutils.HTTPResponse{
 				Code: http.StatusOK,
 				Body: map[string]interface{}{
 					"message": "Login successful",
@@ -28,12 +27,10 @@ func TestLoginController_Login(t *testing.T) {
 		},
 		{
 			Name: "Test case 2: Failed with empty",
-			Request: testutils.Request{
-				Method: http.MethodPost,
-				Url:    "api/v1/users/login",
+			Request: testutils.HTTPRequest{
 				Body:   map[string]interface{}{},
 			},
-			Response: testutils.Response{
+			Response: testutils.HTTPResponse{
 				Code: http.StatusBadRequest,
 				Body: map[string]interface{}{
 					"error": "Key: 'LoginRequest.Message' Error:Field validation for 'Message' failed on the 'required' tag",
@@ -42,14 +39,12 @@ func TestLoginController_Login(t *testing.T) {
 		},
 		{
 			Name: "Test case 3: Failed with number",
-			Request: testutils.Request{
-				Method: http.MethodPost,
-				Url:    "api/v1/users/login",
+			Request: testutils.HTTPRequest{
 				Body: map[string]interface{}{
 					"message": 123,
 				},
 			},
-			Response: testutils.Response{
+			Response: testutils.HTTPResponse{
 				Code: http.StatusBadRequest,
 				Body: map[string]interface{}{
 					"error": "json: cannot unmarshal number into Go struct field LoginRequest.message of type string",
