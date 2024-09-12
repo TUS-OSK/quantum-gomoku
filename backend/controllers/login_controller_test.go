@@ -1,11 +1,10 @@
 package controllers
 
 import (
+	"github.com/gin-gonic/gin"
 	"gomoku/utils/testutils"
 	"net/http"
 	"testing"
-
-	"github.com/gin-gonic/gin"
 )
 
 func TestLoginController_Login(t *testing.T) {
@@ -28,7 +27,7 @@ func TestLoginController_Login(t *testing.T) {
 		{
 			Name: "Test case 2: Failed with empty",
 			Request: testutils.HTTPRequest{
-				Body:   map[string]interface{}{},
+				Body: map[string]interface{}{},
 			},
 			Response: testutils.HTTPResponse{
 				Code: http.StatusBadRequest,

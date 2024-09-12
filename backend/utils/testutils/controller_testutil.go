@@ -10,14 +10,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
 type ControllerTestCase struct {
 	Name     string
 	Request  HTTPRequest
 	Response HTTPResponse
 }
 
-func RunControllerTest(t *testing.T, tests []ControllerTestCase, createController func() gin.HandlerFunc) {
+func RunControllerTest(t *testing.T, tests []ControllerTestCase, targetControllerFunction func() gin.HandlerFunc) {
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
 			response := httptest.NewRecorder()
@@ -32,7 +31,7 @@ func RunControllerTest(t *testing.T, tests []ControllerTestCase, createControlle
 
 			c.Request.Header.Set("Content-Type", "application/json")
 
-			createController()(c)
+			targetControllerFunction()(c)
 
 			if response.Code != tt.Response.Code {
 				t.Errorf("got = %v, want %v", response.Code, tt.Response.Code)

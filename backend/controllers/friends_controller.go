@@ -14,7 +14,6 @@ func NewFriendsController() *FriendsController {
 	return &FriendsController{}
 }
 
-
 // GetFriendsResponse is a struct to define the get friends response
 type GetFriendsResponse struct {
 	Message string `json:"message"`

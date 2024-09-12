@@ -8,4 +8,3 @@ import (
 type Friend struct {
 	gorm.Model
 }
-
