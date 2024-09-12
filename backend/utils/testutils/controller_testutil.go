@@ -37,21 +37,17 @@ func RunControllerTest(t *testing.T, tests []ControllerTestCase, createControlle
 			if response.Code != tt.Response.Code {
 				t.Errorf("got = %v, want %v", response.Code, tt.Response.Code)
 			} else {
-				var body map[string]interface{}
+				var body interface{}
 				var err = json.Unmarshal(response.Body.Bytes(), &body)
 				if err != nil {
 					t.Errorf("got = %v, want %v", response.Body, tt.Response.Body)
 				}
 
 				// to compare
-				for key := range tt.Response.Body {
-					if _, exist := body[key]; exist {
-						if body[key] != tt.Response.Body[key] {
-							t.Errorf("got = %v, want %v", response.Body, tt.Response.Body)
-						}
-					} else {
-						t.Errorf("got = %v, want %v", response.Body, tt.Response.Body)
-					}
+				expectedBody, _ := json.Marshal(tt.Response.Body)
+				actualBody, _ := json.Marshal(body)
+				if string(expectedBody) != string(actualBody) {
+					t.Errorf("got = %v, want %v", string(actualBody), string(expectedBody))
 				}
 			}
 		})
