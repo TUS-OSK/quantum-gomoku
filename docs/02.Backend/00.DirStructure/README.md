@@ -13,7 +13,9 @@ backend/
 ├── middleware
 ├── models
 │   └── database
-└── routes
+├── routes
+└── utils
+    └── testutils
 ```
 
 1. **Dockerfile**: バックエンドイメージをビルドするためのDockerfile
@@ -24,9 +26,10 @@ backend/
 6. **main.go**: バックエンドのエントリーポイント
 7. **middleware**: バックエンドのミドルウェア（現状空の為、git未追跡）
 8. **models**: バックエンドのモデル
-    - **database**: 
+    - **database**: detabase固有の処理を行うモデル
 9.  **routes**: バックエンドのルート
-10. **tmp**: Airによって作成されたバックエンドの一時ディレクトリ
+10. **utils**: バックエンドのユーティリティ（util packageは作成しない）
+    - **testutils**: テスト用のユーティリティ
 
 
 基本的にMVC(Model-View-Controller)パターンに従ってディレクトリ構造を設計している。
