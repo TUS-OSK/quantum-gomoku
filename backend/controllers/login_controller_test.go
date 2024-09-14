@@ -1,10 +1,12 @@
 package controllers
 
 import (
-	"github.com/gin-gonic/gin"
-	"gomoku/utils/testutils"
 	"net/http"
 	"testing"
+
+	"github.com/gin-gonic/gin"
+
+	"gomoku/utils/testutils"
 )
 
 func TestLoginController_Login(t *testing.T) {
