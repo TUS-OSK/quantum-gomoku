@@ -1,4 +1,4 @@
-package controllers
+package controllers_test
 
 import (
 	"net/http"
@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"gomoku/controllers"
 	"gomoku/utils/testutils"
 )
 
@@ -55,6 +56,6 @@ func TestLoginController_Login(t *testing.T) {
 	}
 
 	testutils.RunControllerTest(t, tests, func() gin.HandlerFunc {
-		return NewLoginController().Login
+		return controllers.NewLoginController().Login
 	})
 }
