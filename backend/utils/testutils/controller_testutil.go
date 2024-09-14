@@ -100,8 +100,14 @@ func RunControllerTest(t *testing.T, tests []ControllerTestCase, targetControlle
 			if response.Code != tt.Response.Code {
 				t.Errorf("got = %v, want %v", response.Code, tt.Response.Code)
 			} else {
+				// Unmarshal the response body.
+				var body interface{}
+				if err := json.Unmarshal(response.Body.Bytes(), &body); err != nil {
+					t.Errorf("failed to unmarshal response body: %v", err)
+				}
+
 				// Marshal actual and expected body
-				actualBody := marshalBody(response.Body.Bytes())
+				actualBody := marshalBody(body)
 				expectedBody := marshalBody(tt.Response.Body)
 
 				// compare body as string
