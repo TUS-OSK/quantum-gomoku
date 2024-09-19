@@ -10,25 +10,26 @@ body:
   - type: textarea
     attributes:
       label: "Problem/Todo"
-      description: "詳細を記述してください。"
-      placeholder: |
-        以下のようなことを添えて記述してください。
-        - issue number（強い依存関係がある場合は記載する）
-          - 例: after #123
-        - 問題点(対応内容・対応背景・妥協点)
-        - その他(参考リンクや注意点や補足事項等)
+      description: "このIssueが閉じられた時に達成されるべき事象を簡潔に記入してください"
+      placeholder: ex. テストについて調査し、迷わず書けるよう整備する
     validations:
       required: true
   - type: textarea
     attributes:
-      label: "Expected behavior"
+      label: "Related Issue"
       description: |
-        どのような挙動が期待されるか記述してください。
+        関連するIssueがあれば記述してください。
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: "Details"
+      description: |
+        このIssueに関する詳細情報を記述してください。
       placeholder: |
-        以下のようなことを添えて記述してください。
-        - 期待される挙動
-          - before/after(どのような変更かを画像や動画などで補足するとより良い)
-          - どういったテストで検証されるか(可能であれば)
+        - 機能/議題の詳細
+        - 背景
+        - その他(参考リンクや注意点や補足事項等)
     validations:
       required: false
   - type: textarea
@@ -36,11 +37,6 @@ body:
       label: "Other information"
       description: |
         その他、必要な情報があれば記述してください。
-      placeholder: |
-        以下のようなことを添えて記述してください。
-        - 明確化する議論
-        - 調査が必要なのか
-        - その他(参考リンクや注意点や補足事項等)
     validations:
       required: false
 
