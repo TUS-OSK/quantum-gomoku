@@ -47,7 +47,8 @@ func (controller *SearchUsersController) SearchUsers(context *gin.Context) {
 		response.Users = append(response.Users,
 			User{Username: "O", Icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Latin_letter_O.svg/1920px-Latin_letter_O.svg.png"},
 			User{Username: "OSK", Icon: "https://oskt.us/favicon.ico"},
-			User{Username: "OSS"})
+			User{Username: "OSS", Icon: ""},
+		)
 	}
 
 	context.JSON(http.StatusOK, response)
