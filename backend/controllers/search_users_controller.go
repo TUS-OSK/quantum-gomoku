@@ -26,11 +26,16 @@ type SearchUsersResponse struct {
 
 // SearchUsers is a function to search users
 func (controller *SearchUsersController) SearchUsers(context *gin.Context) {
+
 	user_suffix := context.Query("username")
 	if user_suffix == "" {
 		context.JSON(http.StatusBadRequest, gin.H{"error": "query parameter 'username' is required"})
 		return
 	}
+
+	// Search users based on the user suffix
+	// 以下はMock API のため、実際のデータは返りません
+	// O, OSS, OSKという架空の3つのユーザーが存在するときの返答を模擬しています
 	response := SearchUsersResponse{}
 
 	switch user_suffix {
