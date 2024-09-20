@@ -13,6 +13,8 @@ func GetRouter() *gin.Engine {
 	{
 		users := api.Group("/users")
 		{
+			searchUsersController := controllers.NewSearchUsersController()
+			users.GET("/", searchUsersController.SearchUsers)
 			loginController := controllers.NewLoginController()
 			users.POST("/login", loginController.Login)
 		}
