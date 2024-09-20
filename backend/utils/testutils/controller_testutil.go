@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"strings"
 	"testing"
 
@@ -30,6 +31,7 @@ type ControllerTestCase struct {
 //   - Method: The HTTP method of the request (e.g., "GET", "POST", etc.).
 //   - Url: The URL of the request.
 //   - Body: The request body as a JSON object.
+//   - Query: A map of query parameters to be added to the URL.
 //
 // - Response: A struct representing the expected HTTP response.
 //   - Code: The expected HTTP status code.
@@ -83,9 +85,23 @@ func RunControllerTest(t *testing.T, tests []ControllerTestCase, targetControlle
 			if err != nil {
 				t.Errorf("failed to marshal request body: %v", err)
 			}
+
+			// Parse the request URL and add query parameters.
+			requestUrl, err := url.Parse(tt.Request.Url)
+			if err != nil {
+				t.Errorf("failed to parse url: %v", err)
+			}
+
+			parsedRequestQuery := requestUrl.Query()
+			for key, value := range tt.Request.Query {
+				parsedRequestQuery.Set(key, value)
+			}
+			requestUrl.RawQuery = parsedRequestQuery.Encode()
+
+			// Create the request object.
 			c.Request, err = http.NewRequest(
 				tt.Request.Method,
-				tt.Request.Url,
+				requestUrl.String(),
 				strings.NewReader(string(requestBody)),
 			)
 			if err != nil {

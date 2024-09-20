@@ -5,6 +5,7 @@ type HTTPRequest struct {
 	Method string
 	Url    string
 	Body   interface{}
+	Query  map[string]string
 }
 
 // HTTPResponse represents an HTTP response.
