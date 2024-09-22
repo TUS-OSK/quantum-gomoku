@@ -1,0 +1,53 @@
+openapi: 3.0.3
+info:
+  title: Quantum Gomoku API
+  version: 0.0.1
+servers:
+  - url: http://localhost:5000/api/v1
+tags:
+  - name: users
+    description: Operations about user
+paths:
+  /users:
+    get:
+      tags:
+        - users
+      summary: Search users by username suffix
+      description: Returns a list of users whose usernames match the given suffix.
+      parameters:
+        - in: query
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The suffix of the username to search for.
+      responses:
+        '200':
+          description: A list of users matching the search criteria.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        username:
+                          type: string
+                          example: "OSK"
+                        icon:
+                          type: string
+                          format: uri
+                          example: "https://oskt.us/favicon.ico"
+        '400':
+          description: Bad request. The query parameter 'username' is required.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "query parameter 'username' is required"
