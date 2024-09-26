@@ -61,7 +61,7 @@ brew -v
 #### install
 
 `Mac`の場合はデフォルトで`git`がインストールされていることがあります。ただversionがかなり古いものな場合が多いため、`homebrew`版を使うことを推奨とします。
-
+あ
 ```shell
 git --version # 既にインストールされていないか確認
 brew install git
