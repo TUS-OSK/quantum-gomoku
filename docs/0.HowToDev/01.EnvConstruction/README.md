@@ -62,7 +62,7 @@ brew -v
 
 `Mac`の場合はデフォルトで`git`がインストールされていることがあります。ただversionがかなり古いものな場合が多いため、`homebrew`版を使うことを推奨とします。
 
-古いバージョンであるとき、インストール後ターミナルの再起動が必要
+`Mac`で古いバージョンが存在するときに`homebrew`板をインストールした場合、インストール後ターミナルの再起動が必要です。
 ```shell
 git --version # 既にインストールされていないか確認
 brew install git
@@ -96,11 +96,10 @@ git config --global user.email <githubアカウントのemail>
 #### install（`Mac`）
 
 `Mac`の場合は`Docker Desktop`を使います。
-Docker Desctopで、自分のPCに合ったCPUのものを選択します。
 `windows`でも使えますが、`WSL` + `Docker Desktop`を動かそうとするとメモリ消費が激しく、16GBでも足りない場合があります。
 
 [公式サイト](https://www.docker.com/products/docker-desktop/)よりインストールしてください。
-なお`WSL`の場合もインストールするのは`windows`版です。
+なお`WSL`の場合もインストールするのは`windows`版です。ここで、自分のPCに合ったCPUのものを選択するように注意してください。
 
 
 ```shell
@@ -181,7 +180,7 @@ WSLのメモリ消費が激しい場合、以下のような対策がありま�
 実行自体は`docker`で行いますが、editorでの補完などを効かせるために`Go`をインストールします。
 
 > [!TIP] 
-`devcontainer`内で開発を行うことにより、実行環境と開発環境を一致させることができます。
+>`devcontainer`内で開発を行うことにより、実行環境と開発環境を一致させることができます。
 > しかしながら、backendの`docker`のrootディレクトリは`backend`となっており、`.git`が含まれないため別windowで`git`操作を行う必要があります。
 > `repository`をfrontendとbackendで分けることで解消できますが、そのような大きな変更を実施するほどのインセンティブはないと考えているため、localに`Go`をインストールすることを推奨します。
 > (`devcontainer`の設定で回避できるのかもしれませんが、知識不足で調査が追いついていません)
@@ -198,7 +197,7 @@ vscodeの拡張機能で`Go`をインストールしてください。
 ## 3. Project Initialization
 
 #### リポジトリのクローン
-
+`Docker`の起動方法については、`backend/README.md` `frontend/README.md`にそれぞれ記載があります。
 ```shell
 git clone git@github.com:TUS-OSK/quantum-gomoku.git
 cd quantum-gomoku
