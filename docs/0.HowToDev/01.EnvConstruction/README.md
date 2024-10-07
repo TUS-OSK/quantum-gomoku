@@ -135,7 +135,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 ```shell
 docker version # 確認
 ```
-アプリケーションを起動し、Accept,Skipを選択します。ターミナルの再起動を行うと、docker versionが動かせるようになります。
+アプリケーションを起動し、Accept,Skipを選択します。ターミナルの再起動を行うと、`docker` コマンド（`docker version`など）が動かせるようになります。
 #### Tips（`win`）
 
 WSLのメモリ消費が激しい場合、以下のような対策があります。
