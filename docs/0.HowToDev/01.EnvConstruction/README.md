@@ -62,6 +62,7 @@ brew -v
 
 `Mac`の場合はデフォルトで`git`がインストールされていることがあります。ただversionがかなり古いものな場合が多いため、`homebrew`版を使うことを推奨とします。
 
+`Mac`で古いバージョンが存在するときに`homebrew`版をインストールした場合、インストール後ターミナルの再起動が必要です。
 ```shell
 git --version # 既にインストールされていないか確認
 brew install git
@@ -98,7 +99,7 @@ git config --global user.email <githubアカウントのemail>
 `windows`でも使えますが、`WSL` + `Docker Desktop`を動かそうとするとメモリ消費が激しく、16GBでも足りない場合があります。
 
 [公式サイト](https://www.docker.com/products/docker-desktop/)よりインストールしてください。
-なお`WSL`の場合もインストールするのは`windows`版です。
+なお`WSL`の場合もインストールするのは`windows`版です。ここで、自分のPCに合ったCPUのものを選択するように注意してください。
 
 
 ```shell
@@ -134,29 +135,11 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 ```shell
 docker version # 確認
 ```
-
+アプリケーションを起動し、Accept,Skipを選択します。ターミナルの再起動を行うと、`docker` コマンド（`docker version`など）が動かせるようになります。
 #### Tips（`win`）
 
 WSLのメモリ消費が激しい場合、以下のような対策があります。
 [WSL2によるホストのメモリ枯渇を防ぐための暫定対処](https://qiita.com/yoichiwo7/items/e3e13b6fe2f32c4c6120)
-
-### Go（backend開発者のみ）
-
-実行自体は`docker`で行いますが、editorでの補完などを効かせるために`Go`をインストールします。
-
-> [!TIP] `devcontainer`内で開発を行うことにより、実行環境と開発環境を一致させることができます。
-> しかしながら、backendの`docker`のrootディレクトリは`backend`となっており、`.git`が含まれないため別windowで`git`操作を行う必要があります。
-> `repository`をfrontendとbackendで分けることで解消できますが、そのような大きな変更を実施するほどのインセンティブはないと考えているため、localに`Go`をインストールすることを推奨します。
-> (`devcontainer`の設定で回避できるのかもしれませんが、知識不足で調査が追いついていません)
- 
-#### install
-
-```shell
-go version # 既にインストールされていないか確認
-brew install go@1.23
-go version   # 確認
-```
-vscodeの拡張機能で`Go`をインストールしてください。
 
 ### VScode
 
@@ -192,6 +175,24 @@ vscodeの拡張機能で`Go`をインストールしてください。
 - `Draw.io Integration`：Draw.ioを`VScode`上で使える
 - `Markdown All in One`：`markdown`のプレビュー機能
 
+### Go（backend開発者のみ）
+
+実行自体は`docker`で行いますが、editorでの補完などを効かせるために`Go`をインストールします。
+
+> [!TIP] 
+>`devcontainer`内で開発を行うことにより、実行環境と開発環境を一致させることができます。
+> しかしながら、backendの`docker`のrootディレクトリは`backend`となっており、`.git`が含まれないため別windowで`git`操作を行う必要があります。
+> `repository`をfrontendとbackendで分けることで解消できますが、そのような大きな変更を実施するほどのインセンティブはないと考えているため、localに`Go`をインストールすることを推奨します。
+> (`devcontainer`の設定で回避できるのかもしれませんが、知識不足で調査が追いついていません)
+ 
+#### install
+
+```shell
+go version # 既にインストールされていないか確認
+brew install go@1.23
+go version   # 確認
+```
+vscodeの拡張機能で`Go`をインストールしてください。
 
 ## 3. Project Initialization
 
@@ -202,4 +203,4 @@ git clone git@github.com:TUS-OSK/quantum-gomoku.git
 cd quantum-gomoku
 ```
 
-WIP
+`Docker`の起動方法については、`backend/README.md` `frontend/README.md`にそれぞれ記載があります。
