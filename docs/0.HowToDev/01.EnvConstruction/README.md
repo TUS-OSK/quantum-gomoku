@@ -197,10 +197,10 @@ vscodeの拡張機能で`Go`をインストールしてください。
 ## 3. Project Initialization
 
 #### リポジトリのクローン
-`Docker`の起動方法については、`backend/README.md` `frontend/README.md`にそれぞれ記載があります。
+
 ```shell
 git clone git@github.com:TUS-OSK/quantum-gomoku.git
 cd quantum-gomoku
 ```
 
-WIP
+`Docker`の起動方法については、`backend/README.md` `frontend/README.md`にそれぞれ記載があります。
