@@ -17,9 +17,8 @@ export default function Stone({ changeTurn, xIsNext }: StoneProps) {
 
   return (
     <button
-      className="text-2xl font-bold leading-8 p-0 text-center border"
+      className="text-2xl font-bold leading-8 p-0 text-center border w-full h-full"
       onClick={onClick}
-      style={{ width: '100%', height: '100%' }}
     >
       {stoneKind}
     </button>
