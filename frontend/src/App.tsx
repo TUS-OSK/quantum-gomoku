@@ -8,13 +8,12 @@ function App() {
       <div className="h-[100dvh] flex flex-col">
         <Header />
         <div className="flex justify-center items-center flex-grow">
-          <div className="w-1/2 md:w-1/3">
-            <h1 className="text-4xl font-bold text-center">Welcome to Gomoku</h1>
+          <div className="w-1/2">
             <Game />
           </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </>
   )
 }

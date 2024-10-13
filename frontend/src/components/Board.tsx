@@ -23,24 +23,24 @@ export default function Board({ xIsNext, changeTurn }: BoardProps) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="mb-2 flex justify-center items-center">{status}</div>
-      <div
-        className="flex justify-center items-center w-full"
-        style={{ minWidth: `${boardSize * 20 + (boardSize - 1) * 4}px` }}
-        >
+    <>
+        <div className="mb-2 flex justify-center items-center">{status}</div>
         <div
-          className="grid gap-1 border border-black"
-          style={{
-        gridTemplateColumns: `repeat(${boardSize}, minmax(20px, 40px))`,
-        gridTemplateRows: `repeat(${boardSize}, minmax(20px, 40px))`,
-        width: '100%',
-        aspectRatio: '1',
-          }}
+          className="flex justify-center items-center"
+          style={{ minWidth: `${boardSize * 20 + (boardSize - 1) * 4}px` }}
         >
-          {Stones}
+          <div
+            className="grid gap-1 border border-black"
+            style={{
+              gridTemplateColumns: `repeat(${boardSize}, minmax(20px, 40px))`,
+              gridTemplateRows: `repeat(${boardSize}, minmax(20px, 40px))`,
+              width: '100%',
+              aspectRatio: '1',
+            }}
+          >
+            {Stones}
+          </div>
         </div>
-      </div>
-    </div>
+    </>
   );
 }

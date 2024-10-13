@@ -14,42 +14,19 @@ export default function Game() {
     return turnCount % 2 === 0 ? 'X' : 'O';
   }
 
-
-  // 履歴ジャンプ機能だが、現状は不要なのでコメントアウト
-  // TODO: Tailwind CSS でスタイリングでのレスポンシブ対応必要
-  // function jumpTo(nextMove: number) {
-  //   setCurrentMove(nextMove);
-  // }
-
-  // const moves = history.map((stones, move) => {
-  //   let description;
-  //   if (move > 0) {
-  //     description = 'Go to move #' + move;
-  //   } else {
-  //     description = 'Go to game start';
-  //   }
-  //   return (
-  //     <li key={move}>
-  //       <button onClick={() => jumpTo(move)}>{description}</button>
-  //     </li>
-  //   );
-  // });
-
   return (
     <>
-      <div className="flex justify-center">
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <Board
+          xIsNext={turnCount % 2 === 0}
+          changeTurn={changeTurn}
+        />
         <button
           className="m-5 p-2 bg-black text-white rounded hover:bg-gray-600"
           onClick={resetGame}
         >
           Reset
         </button>
-      </div>
-      <div className="ml-5">
-        <Board
-          xIsNext={turnCount % 2 === 0}
-          changeTurn={changeTurn}
-        />
       </div>
     </>
   );

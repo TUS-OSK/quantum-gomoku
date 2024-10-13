@@ -1,12 +1,11 @@
 export default function Header() {
   return (
-    <header>
-      <div className="basis-2/5 flex items-center justify-between">
-        <h1 className="font-bold text-black tracking-wide text-2xl">
+    <>
+      <header className="py-5 mb-3 border-b border-b  border-b-slate-300">
+        <h1 className="font-bold text-black tracking-wide text-3xl">
           Quantum Gomoku
         </h1>
-        <button className="font-bold m-5 p-2 bg-black text-white rounded hover:bg-gray-600">LOGIN</button>
-      </div>
-    </header>
+      </header>
+    </>
   );
 }
