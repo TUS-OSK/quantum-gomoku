@@ -26,7 +26,7 @@ export default function Board({ xIsNext, changeTurn }: BoardProps) {
 
   return (
     <>
-      <div className="mb-2 flex justify-center items-center">{status}</div>
+      <div className="mb-5 flex justify-center items-center text-2xl font-bold">{status}</div>
       <div
         className="flex justify-center items-center"
         style={{ minWidth: `${boardSize * minCellSize + (boardSize - 1) * 4}px` }}
