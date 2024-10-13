@@ -6,7 +6,6 @@ export interface StoneProps {
 }
 
 export default function Stone({ changeTurn, xIsNext }: StoneProps) {
-
   const [stoneKind, setStoneKind] = useState<string | null>(null);
 
   function onClick() {
@@ -18,8 +17,9 @@ export default function Stone({ changeTurn, xIsNext }: StoneProps) {
 
   return (
     <button
-      className="float-left text-2xl font-bold leading-8 h-8 -mr-px -mt-px p-0 text-center w-8 border"
+      className="text-2xl font-bold leading-8 p-0 text-center border"
       onClick={onClick}
+      style={{ width: '100%', height: '100%' }}
     >
       {stoneKind}
     </button>

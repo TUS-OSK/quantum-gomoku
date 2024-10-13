@@ -8,10 +8,13 @@ interface BoardProps {
 
 export default function Board({ xIsNext, changeTurn }: BoardProps) {
   const boardSize = 19;
-  // todo: changeTurnを渡すのではなく、winner判定を含めた新しい関数を作り、それを渡す
-  const Stones = Array(boardSize * boardSize).fill(<Stone changeTurn={changeTurn} xIsNext={xIsNext} />);
 
-  const winner = calculateWinner(Stones); // 要修正
+  const Stones = Array(boardSize * boardSize).fill(null).map((_, index) => (
+    <Stone key={index} changeTurn={changeTurn} xIsNext={xIsNext} />
+  ));
+
+  const winner = null;
+  // const winner = calculateWinner(Stones); // 要修正
   let status;
   if (winner) {
     status = 'Winner: ' + winner;
@@ -20,9 +23,17 @@ export default function Board({ xIsNext, changeTurn }: BoardProps) {
   }
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="mb-2 flex justify-center items-center">{status}</div>
-      {/* todo: 頑張って描画する */}
-    </>
+      <div
+        className="grid gap-1 border border-black"
+        style={{
+          gridTemplateColumns: `repeat(${boardSize}, minmax(20px, 40px))`,
+          gridTemplateRows: `repeat(${boardSize}, minmax(20px, 40px))`,
+        }}
+      >
+        {Stones}
+      </div>
+    </div>
   );
 }
