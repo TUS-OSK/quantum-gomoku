@@ -2,21 +2,16 @@ import { useState } from 'react';
 import Board from './Board';
 
 export default function Game() {
-  const boardSize = 19;
-  const [history, setHistory] = useState([Array(boardSize * boardSize).fill(null)]);
-  const [currentMove, setCurrentMove] = useState(0);
-  const xIsNext = currentMove % 2 === 0;
-  const currentStones = history[currentMove];
-
-  function handlePlay(nextStones: Array<string | null>) {
-    const nextHistory = [...history.slice(0, currentMove + 1), nextStones];
-    setHistory(nextHistory);
-    setCurrentMove(nextHistory.length - 1);
-  }
+  const [turnCount, setTurnCount] = useState(0);
 
   function resetGame() {
-    setHistory([Array(boardSize * boardSize).fill(null)]);
-    setCurrentMove(0);
+    setTurnCount(0);
+    // todo: resetをboradに伝える指示が必要
+  }
+
+  function changeTurn() {
+    setTurnCount(turnCount + 1);
+    return turnCount % 2 === 0 ? 'X' : 'O';
   }
 
 
@@ -41,7 +36,7 @@ export default function Game() {
   // });
 
   return (
-    <div>
+    <>
       <div className="flex justify-center">
         <button
           className="m-5 p-2 bg-black text-white rounded hover:bg-gray-600"
@@ -52,14 +47,10 @@ export default function Game() {
       </div>
       <div className="ml-5">
         <Board
-          xIsNext={xIsNext}
-          stones={currentStones}
-          onPlay={handlePlay}
+          xIsNext={turnCount % 2 === 0}
+          changeTurn={changeTurn}
         />
       </div>
-      <div className="flex justify-center">
-        {/* <ol>{moves}</ol> */}
-      </div>
-    </div>
+    </>
   );
 }

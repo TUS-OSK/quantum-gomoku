@@ -3,27 +3,15 @@ import { calculateWinner } from '../utils/calculateWinner';
 
 interface BoardProps {
   xIsNext: boolean;
-  stones: Array<string | null>;
-  onPlay: (stones: Array<string | null>) => void;
+  changeTurn: () => void;
 }
 
-export default function Board({ xIsNext, stones, onPlay }: BoardProps) {
+export default function Board({ xIsNext, changeTurn }: BoardProps) {
   const boardSize = 19;
+  // todo: changeTurnを渡すのではなく、winner判定を含めた新しい関数を作り、それを渡す
+  const Stones = Array(boardSize * boardSize).fill(<Stone changeTurn={changeTurn} xIsNext={xIsNext} />);
 
-  function handleClick(i: number) {
-    if (calculateWinner(stones) || stones[i]) {
-      return;
-    }
-    const nextStones = stones.slice();
-    if (xIsNext) {
-      nextStones[i] = 'X';
-    } else {
-      nextStones[i] = 'O';
-    }
-    onPlay(nextStones);
-  }
-
-  const winner = calculateWinner(stones);
+  const winner = calculateWinner(Stones); // 要修正
   let status;
   if (winner) {
     status = 'Winner: ' + winner;
@@ -31,29 +19,10 @@ export default function Board({ xIsNext, stones, onPlay }: BoardProps) {
     status = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
 
-  // TODO: これは酷い実装なので、リファクタリング(関数型プログラミングらしく)
-  // keyもindexだとエンタングルの際に問題が起きるので、要検討
-  //
-  const boardRows = [];
-  for (let row = 0; row < boardSize; row++) {
-    const rowStones = [];
-    for (let col = 0; col < boardSize; col++) {
-      const index = row * boardSize + col;
-      rowStones.push(
-        <Stone key={index} value={stones[index]} onStoneClick={() => handleClick(index)} />
-      );
-    }
-    boardRows.push(
-      <div key={row} className="clear-both table">
-        {rowStones}
-      </div>
-    );
-  }
-
   return (
     <>
       <div className="mb-2 flex justify-center items-center">{status}</div>
-      {boardRows}
+      {/* todo: 頑張って描画する */}
     </>
   );
 }
