@@ -8,7 +8,7 @@ function App() {
       <div className="h-[100dvh] flex flex-col">
         <Header />
         <div className="flex justify-center items-center flex-grow">
-          <div className="w-1/2">
+          <div className="w-1/3 2xl:w-1/2">
             <Game />
           </div>
         </div>

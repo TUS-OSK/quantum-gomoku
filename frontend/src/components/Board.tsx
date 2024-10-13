@@ -9,7 +9,7 @@ interface BoardProps {
 export default function Board({ xIsNext, changeTurn }: BoardProps) {
   const boardSize = 19;
   const minCellSize = 20;
-  const maxCellSize = 40;
+  const maxCellSize = 50;
 
   const Stones = Array(boardSize * boardSize).fill(null).map((_, index) => (
     <Stone key={index} changeTurn={changeTurn} xIsNext={xIsNext} />
@@ -29,7 +29,7 @@ export default function Board({ xIsNext, changeTurn }: BoardProps) {
       <div className="mb-5 flex justify-center items-center text-2xl font-bold">{status}</div>
       <div
         className="flex justify-center items-center"
-        style={{ minWidth: `${boardSize * minCellSize + (boardSize - 1) * 4}px` }}
+        style={{ minWidth: `${boardSize * minCellSize}px` }}
       >
         <div
           className="grid border-2 border-black"
