@@ -24,23 +24,35 @@ export default function Board({ xIsNext, changeTurn }: BoardProps) {
 
   return (
     <>
-        <div className="mb-2 flex justify-center items-center">{status}</div>
+      <div className="mb-2 flex justify-center items-center">{status}</div>
+      <div
+        className="flex justify-center items-center"
+        style={{ minWidth: `${boardSize * 20 + (boardSize - 1) * 4}px` }}
+      >
         <div
-          className="flex justify-center items-center"
-          style={{ minWidth: `${boardSize * 20 + (boardSize - 1) * 4}px` }}
+          className="grid border-2 border-black"
+          style={{
+            gridTemplateColumns: `repeat(${boardSize}, minmax(20px, 40px))`,
+            gridTemplateRows: `repeat(${boardSize}, minmax(20px, 40px))`,
+            width: '100%',
+            aspectRatio: '1',
+          }}
         >
-          <div
-            className="grid gap-1 border border-black"
-            style={{
-              gridTemplateColumns: `repeat(${boardSize}, minmax(20px, 40px))`,
-              gridTemplateRows: `repeat(${boardSize}, minmax(20px, 40px))`,
-              width: '100%',
-              aspectRatio: '1',
-            }}
-          >
-            {Stones}
-          </div>
+          {
+            Stones.map((Stone, index) => {
+              const isRightBox = (index + 1) % boardSize === 0;
+              const isBottomBox = index >= boardSize * (boardSize - 1);
+              return (
+                <div className={
+                  `border-black ${isRightBox ? '' : ' border-r'} ${isBottomBox ? '' : ' border-b'}`
+                }>
+                  {Stone}
+                </div>
+              );
+            })
+          }
         </div>
+      </div>
     </>
   );
 }
