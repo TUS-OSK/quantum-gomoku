@@ -2,15 +2,15 @@ import { useState } from 'react';
 
 export interface StoneProps {
   changeTurn: () => void;
-  xIsNext: boolean;
+  blackIsNext: boolean;
 }
 
-export default function Stone({ changeTurn, xIsNext }: StoneProps) {
-  const [stoneKind, setStoneKind] = useState<string | null>(null);
+export default function Stone({ changeTurn, blackIsNext }: StoneProps) {
+  const [stoneKind, setStoneKind] = useState<boolean | null>(null);
 
   function onClick() {
     if (stoneKind === null) {
-      setStoneKind(xIsNext ? 'X' : 'O');
+      setStoneKind(blackIsNext);
       changeTurn();
     }
   }
@@ -25,9 +25,9 @@ export default function Stone({ changeTurn, xIsNext }: StoneProps) {
         justifyContent: 'center',
       }}
     >
-      {stoneKind && (
+      {stoneKind !== null && (
         <div
-          className={`w-[85%] h-[85%] border border-black rounded-full ${stoneKind === 'X' ? 'bg-white' : 'bg-black'}`}
+          className={`w-[85%] h-[85%] border border-black rounded-full ${stoneKind ? 'bg-white' : 'bg-black'}`}
         ></div>
       )}
     </button>

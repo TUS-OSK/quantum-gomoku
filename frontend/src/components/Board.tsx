@@ -2,17 +2,17 @@ import Stone from './Stone';
 import { calculateWinner } from '../utils/calculateWinner';
 
 interface BoardProps {
-  xIsNext: boolean;
+  blackIsNext: boolean;
   changeTurn: () => void;
 }
 
-export default function Board({ xIsNext, changeTurn }: BoardProps) {
+export default function Board({ blackIsNext, changeTurn }: BoardProps) {
   const boardSize = 19;
   const minCellSize = 20;
   const maxCellSize = 50;
 
   const Stones = Array(boardSize * boardSize).fill(null).map((_, index) => (
-    <Stone key={index} changeTurn={changeTurn} xIsNext={xIsNext} />
+    <Stone key={index} changeTurn={changeTurn} blackIsNext={blackIsNext} />
   ));
 
   const winner = null;
@@ -21,7 +21,7 @@ export default function Board({ xIsNext, changeTurn }: BoardProps) {
   if (winner) {
     status = 'Winner: ' + winner;
   } else {
-    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+    status = 'Next player: ' + (blackIsNext ? 'X' : 'O');
   }
 
   return (
