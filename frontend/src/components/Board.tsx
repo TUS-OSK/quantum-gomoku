@@ -20,7 +20,7 @@ export default function Board({ blackIsNext, changeTurn }: BoardProps) {
   if (winner) {
     status = 'Winner: ' + winner;
   } else {
-    status = 'Next player: ' + (blackIsNext ? 'X' : 'O');
+    status = 'Next player: ' + (blackIsNext ? 'Black' : 'White');
   }
 
   return (

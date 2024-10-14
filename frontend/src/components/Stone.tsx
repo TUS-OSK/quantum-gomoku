@@ -26,7 +26,7 @@ export default function Stone({ stoneKind, setStoneKind, changeTurn, blackIsNext
     >
       {stoneKind !== null && (
         <div
-          className={`w-[85%] h-[85%] border border-black rounded-full ${stoneKind ? 'bg-white' : 'bg-black'}`}
+          className={`w-[85%] h-[85%] border border-black rounded-full ${stoneKind ? 'bg-black' : 'bg-white'}`}
         ></div>
       )}
     </button>
