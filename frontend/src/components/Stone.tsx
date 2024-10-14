@@ -1,12 +1,11 @@
-import { useState } from 'react';
-
 export interface StoneProps {
+  stoneKind: boolean | null;
+  setStoneKind: (stoneKind: boolean | null) => void;
   changeTurn: () => void;
   blackIsNext: boolean;
 }
 
-export default function Stone({ changeTurn, blackIsNext }: StoneProps) {
-  const [stoneKind, setStoneKind] = useState<boolean | null>(null);
+export default function Stone({ stoneKind, setStoneKind, changeTurn, blackIsNext }: StoneProps) {
 
   function onClick() {
     if (stoneKind === null) {
