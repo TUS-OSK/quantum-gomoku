@@ -1,4 +1,6 @@
-export default function Header() {
+import React from "react";
+
+const Header: React.FC = () => {
   return (
     <>
       <header className="p-5 mb-3 border-b border-b  border-b-slate-300">
@@ -9,3 +11,5 @@ export default function Header() {
     </>
   );
 }
+
+export default Header;

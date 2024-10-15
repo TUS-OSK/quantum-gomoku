@@ -1,8 +1,9 @@
+import React from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Game from './components/Game';
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
       <div className="h-[100dvh] flex flex-col">
@@ -18,4 +19,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Stone from './Stone';
 
-interface BoardProps {
+type BoardProps = {
   BOARD_SIZE: number;
   blackIsNext: boolean;
   changeTurn: () => void;
 }
 
-export default function Board({ BOARD_SIZE, blackIsNext, changeTurn }: BoardProps) {
+const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }: BoardProps) => {
   const MINIMUM_CELL_SIZE = 20;
   const MAXIMUM_CELL_SIZE = 50;
 
@@ -137,3 +137,5 @@ const calculateWinner = (stoneKinds: (null | boolean)[], BOARD_SIZE: number, bla
   }
 
 }
+
+export default Board;

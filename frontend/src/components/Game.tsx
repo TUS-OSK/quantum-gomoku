@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Board from './Board';
 
-export default function Game() {
+const Game: React.FC = () => {
   const [turnCount, setTurnCount] = useState(0);
   const BOARD_SIZE = 19;
 
@@ -22,3 +22,5 @@ export default function Game() {
     </>
   );
 }
+
+export default Game;

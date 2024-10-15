@@ -1,11 +1,13 @@
-export interface StoneProps {
+import React from "react";
+
+type StoneProps = {
   stoneKind: boolean | null;
   setStoneKind: (stoneKind: boolean | null) => void;
   changeTurn: () => void;
   blackIsNext: boolean;
 }
 
-export default function Stone({ stoneKind, setStoneKind, changeTurn, blackIsNext }: StoneProps) {
+const Stone: React.FC<StoneProps> = ({ stoneKind, setStoneKind, changeTurn, blackIsNext }) => {
 
   function onClick() {
     if (stoneKind === null) {
@@ -32,3 +34,5 @@ export default function Stone({ stoneKind, setStoneKind, changeTurn, blackIsNext
     </button>
   );
 }
+
+export default Stone;
