@@ -7,7 +7,22 @@ type BoardProps = {
   changeTurn: () => void;
 }
 
-const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }: BoardProps) => {
+/**
+ * Board component for the Quantum Gomoku game.
+ *
+ * @component
+ * @param {number} BOARD_SIZE - The size of the board (number of cells per row/column).
+ * @param {boolean} blackIsNext - Indicates if the next player is black.
+ * @param {() => void} changeTurn - Function to change the turn to the next player.
+ *
+ * @returns {JSX.Element} The rendered Board component.
+ *
+ * @example
+ * return (
+ *  <Board BOARD_SIZE={19} blackIsNext={true} changeTurn={handleChangeTurn} />
+ * )
+ */
+const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) => {
   const MINIMUM_CELL_SIZE = 20;
   const MAXIMUM_CELL_SIZE = 50;
 
@@ -62,7 +77,15 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }: Bo
   );
 }
 
-
+/**
+ * Calculates the winner of the game based on the current state of the board.
+ *
+ * @param {(null | boolean)[]} stoneKinds - Array representing the state of each cell on the board. (null: empty, true: black, false: white)
+ * @param {number} BOARD_SIZE - The size of the board (number of cells per row/column).
+ * @param {boolean} blackPriority - Indicates if black has priority in case of a tie.
+ *
+ * @returns {null | string} The winner of the game ('Black' or 'White'), or null if there is no winner yet.
+ */
 const calculateWinner = (stoneKinds: (null | boolean)[], BOARD_SIZE: number, blackPriority: boolean): null | string => {
 
   type stoneCounter = {
