@@ -72,7 +72,7 @@ const calculateWinner = (stoneKinds: (null | boolean)[], BOARD_SIZE: number, bla
     continuous: number
   }
 
-  const mergeStoneCounter = (counter1: stoneCounter, counter2: stoneCounter) => {
+  const mergeStoneCounter = (counter1: stoneCounter, counter2: stoneCounter): stoneCounter => {
     return {
       black: Math.max(counter1.black, counter2.black),
       white: Math.max(counter1.white, counter2.white),

@@ -5,7 +5,7 @@ const Game: React.FC = () => {
   const [turnCount, setTurnCount] = useState(0);
   const BOARD_SIZE = 19;
 
-  function changeTurn() {
+  const changeTurn = (): void => {
     setTurnCount(turnCount + 1);
     return;
   }
