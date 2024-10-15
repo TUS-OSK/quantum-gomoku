@@ -101,7 +101,7 @@ const calculateWinner = (stoneKinds: (null | boolean)[], BOARD_SIZE: number, bla
     grid.push(stoneKinds.slice(i * BOARD_SIZE, (i + 1) * BOARD_SIZE));
   }
 
-  const rotationGrid = (grid: (any)[][]): (any)[][] => {
+  const rotationGrid = <T,>(grid: T[][]): T[][] => {
     return grid[0].map((_, i) => grid.map(row => row[i]).reverse());
   }
 
