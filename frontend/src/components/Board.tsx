@@ -2,18 +2,18 @@ import { useState } from 'react';
 import Stone from './Stone';
 
 interface BoardProps {
+  BOARD_SIZE: number;
   blackIsNext: boolean;
   changeTurn: () => void;
 }
 
-export default function Board({ blackIsNext, changeTurn }: BoardProps) {
-  const boardSize = 19;
-  const minCellSize = 20;
-  const maxCellSize = 50;
+export default function Board({ BOARD_SIZE, blackIsNext, changeTurn }: BoardProps) {
+  const MINIMUM_CELL_SIZE = 20;
+  const MAXIMUM_CELL_SIZE = 50;
 
-  const stoneStates = Array(boardSize * boardSize).fill(null).map(() => useState<null | boolean>(null));
+  const stoneStates = Array(BOARD_SIZE * BOARD_SIZE).fill(null).map(() => useState<null | boolean>(null));
 
-  const winner = calculateWinner(stoneStates.map(([stoneKind]) => stoneKind), boardSize, !blackIsNext);
+  const winner = calculateWinner(stoneStates.map(([stoneKind]) => stoneKind), BOARD_SIZE, !blackIsNext);
   let status;
   if (winner) {
     status = 'Winner: ' + winner;
@@ -26,21 +26,21 @@ export default function Board({ blackIsNext, changeTurn }: BoardProps) {
       <div className="mb-5 flex justify-center items-center text-2xl font-bold">{status}</div>
       <div
         className="flex justify-center items-center"
-        style={{ minWidth: `${boardSize * minCellSize}px` }}
+        style={{ minWidth: `${BOARD_SIZE * MINIMUM_CELL_SIZE}px` }}
       >
         <div
           className="grid border-2 border-black"
           style={{
-            gridTemplateColumns: `repeat(${boardSize}, minmax(${minCellSize}px, ${maxCellSize}px))`,
-            gridTemplateRows: `repeat(${boardSize}, minmax(${minCellSize}px, ${maxCellSize}px))`,
+            gridTemplateColumns: `repeat(${BOARD_SIZE}, minmax(${MINIMUM_CELL_SIZE}px, ${MAXIMUM_CELL_SIZE}px))`,
+            gridTemplateRows: `repeat(${BOARD_SIZE}, minmax(${MINIMUM_CELL_SIZE}px, ${MAXIMUM_CELL_SIZE}px))`,
             width: '100%',
             aspectRatio: '1',
           }}
         >
           {
             stoneStates.map(([stoneKind, setStoneKind], index) => {
-              const isRightCell = (index + 1) % boardSize === 0;
-              const isBottomCell = index >= boardSize * (boardSize - 1);
+              const isRightCell = (index + 1) % BOARD_SIZE === 0;
+              const isBottomCell = index >= BOARD_SIZE * (BOARD_SIZE - 1);
               const isBlankCell = stoneKind === null;
               return (
                 <div
@@ -63,7 +63,7 @@ export default function Board({ blackIsNext, changeTurn }: BoardProps) {
 }
 
 
-const calculateWinner = (stoneKinds: (null | boolean)[], boardSize: number, blackPriority: boolean): null | string => {
+const calculateWinner = (stoneKinds: (null | boolean)[], BOARD_SIZE: number, blackPriority: boolean): null | string => {
 
   type stoneCounter = {
     black: number,
@@ -97,8 +97,8 @@ const calculateWinner = (stoneKinds: (null | boolean)[], boardSize: number, blac
 
   const lines: (boolean | null)[][] = [];
   let grid: (boolean | null)[][] = [];
-  for (let i = 0; i < boardSize; i++) {
-    grid.push(stoneKinds.slice(i * boardSize, (i + 1) * boardSize));
+  for (let i = 0; i < BOARD_SIZE; i++) {
+    grid.push(stoneKinds.slice(i * BOARD_SIZE, (i + 1) * BOARD_SIZE));
   }
 
   const rotationGrid = (grid: (any)[][]): (any)[][] => {
@@ -111,10 +111,10 @@ const calculateWinner = (stoneKinds: (null | boolean)[], boardSize: number, blac
       lines.push(...grid);
     }
     // 斜め方向（右下）
-    for (let row = 0; row < boardSize; row++) {
+    for (let row = 0; row < BOARD_SIZE; row++) {
       lines.push([]);
-      for (let d = 0; d < boardSize; d++) {
-        if (row + d < boardSize) {
+      for (let d = 0; d < BOARD_SIZE; d++) {
+        if (row + d < BOARD_SIZE) {
           lines[lines.length - 1].push(grid[row + d][d]);
         } else {
           break;
