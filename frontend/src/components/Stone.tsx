@@ -2,7 +2,7 @@ import React from "react";
 
 type StoneProps = {
   stoneKind: boolean | null;
-  setStoneKind: (stoneKind: boolean | null) => void;
+  setStoneKind: (stoneKind: boolean) => void;
   changeTurn: () => void;
   blackIsNext: boolean;
 }

@@ -26,9 +26,19 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) =>
   const MINIMUM_CELL_SIZE = 20;
   const MAXIMUM_CELL_SIZE = 50;
 
-  const stoneStates = Array(BOARD_SIZE * BOARD_SIZE).fill(null).map(() => useState<null | boolean>(null));
+  const [stoneKinds, setStoneKinds] = useState<(null | boolean)[]>(Array(BOARD_SIZE * BOARD_SIZE).fill(null));
 
-  const winner = calculateWinner(stoneStates.map(([stoneKind]) => stoneKind), BOARD_SIZE, !blackIsNext);
+  const setIthStoneKind = (i: number, stoneKind: boolean) => {
+    setStoneKinds((prev) => {
+      const newStoneKinds = [...prev];
+      newStoneKinds[i] = stoneKind;
+      return newStoneKinds;
+    });
+  }
+
+  const curriedSetIthStoneKind = (i: number) => (stoneKind: boolean) => setIthStoneKind(i, stoneKind);
+
+  const winner = calculateWinner(stoneKinds, BOARD_SIZE, !blackIsNext);
   let status;
   if (winner) {
     status = 'Winner: ' + winner;
@@ -53,7 +63,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) =>
           }}
         >
           {
-            stoneStates.map(([stoneKind, setStoneKind], index) => {
+            stoneKinds.map((stoneKind, index) => {
               const isRightCell = (index + 1) % BOARD_SIZE === 0;
               const isBottomCell = index >= BOARD_SIZE * (BOARD_SIZE - 1);
               const isBlankCell = stoneKind === null;
@@ -63,7 +73,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) =>
                 >
                   <Stone
                     stoneKind={stoneKind}
-                    setStoneKind={setStoneKind}
+                    setStoneKind={curriedSetIthStoneKind(index)}
                     changeTurn={changeTurn}
                     blackIsNext={blackIsNext}
                   />
