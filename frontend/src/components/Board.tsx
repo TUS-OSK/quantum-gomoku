@@ -135,65 +135,87 @@ const calculateWinner = (stoneKinds: (null | boolean)[], BOARD_SIZE: number, bla
 
   // lineの石の並びから連続する石の数をカウントする関数
   const calculateCounterFromLine = (line: (boolean | null)[]): stoneCounter => {
-    return line.reduce((accCnt: stoneCounter, curKind: boolean | null) => {
-      if (curKind === null) {
-        return { blackCntMax: accCnt.blackCntMax, whiteCntMax: accCnt.whiteCntMax, prevKind: null, continuous: 0 };
+    // 連続する石の数を更新する関数
+    const updateStoneCount = (isCurrentKind: boolean, previousKind: boolean | null, maxCount: number, continuousCount: number): number => {
+      return isCurrentKind
+        ? (previousKind === isCurrentKind ? continuousCount + 1 : 1)
+        : maxCount;
+    };
+
+    return line.reduce((accumulator: stoneCounter, currentKind: boolean | null) => {
+      if (currentKind === null) {
+        // 石がない場合、連続カウントをリセット
+        return { ...accumulator, prevKind: null, continuous: 0 };
       }
+
+      // 黒石と白石の連続カウントを更新
+      const newBlackCount = updateStoneCount(currentKind, accumulator.prevKind, accumulator.blackCntMax, accumulator.continuous);
+      const newWhiteCount = updateStoneCount(!currentKind, accumulator.prevKind, accumulator.whiteCntMax, accumulator.continuous);
+
       return {
-        blackCntMax: curKind && accCnt.prevKind === curKind ? Math.max(accCnt.continuous + 1, accCnt.blackCntMax) : Math.max(accCnt.blackCntMax, 1),
-        whiteCntMax: !curKind && accCnt.prevKind === curKind ? Math.max(accCnt.continuous + 1, accCnt.whiteCntMax) : Math.max(accCnt.whiteCntMax, 1),
-        prevKind: curKind,
-        continuous: accCnt.prevKind === curKind ? accCnt.continuous + 1 : 1,
+        blackCntMax: newBlackCount,
+        whiteCntMax: newWhiteCount,
+        prevKind: currentKind,
+        continuous: accumulator.prevKind === currentKind ? accumulator.continuous + 1 : 1,
       };
     }, { blackCntMax: 0, whiteCntMax: 0, prevKind: null, continuous: 0 });
-  }
+  };
 
-  // [INFO] ここのgrid -> linesの処理は切り出した方が良いかもしれない、が、他で呼び出す予定がないためそのまま記載
-  const boardAllLines: (boolean | null)[][] = [];
+  // 盤面上の全てのlineを取得する関数
+  // [WARNING] 対角線のみダブルカウントしている
+  const getAllLines = (stoneKinds: (boolean | null)[]): (boolean | null)[][] => {
+    const boardAllLines: (boolean | null)[][] = [];
 
-  // 後のline分割処理を明瞭に記載するため、二次元配列に変換
-  let grid: (boolean | null)[][] = Array.from({ length: BOARD_SIZE }, (_, i) => stoneKinds.slice(i * BOARD_SIZE, (i + 1) * BOARD_SIZE));
+    // 後のline分割処理を明瞭に記載するため、二次元配列に変換
+    let grid: (boolean | null)[][] = Array.from({ length: BOARD_SIZE }, (_, i) => stoneKinds.slice(i * BOARD_SIZE, (i + 1) * BOARD_SIZE));
 
-  // 右に90度回転する関数
-  const rotationGrid = <T,>(grid: T[][]): T[][] => {
-    return grid[0].map((_, i) => grid.map(row => row[i]).reverse());
-  }
-
-  // 宣言型に直せるが、可読性が落ちるためfor文で記載
-  for (let i = 0; i < 4; i++) {
-    // 縦横方向
-    if (i < 2) {
-      boardAllLines.push(...grid);
+    // 右に90度回転する関数
+    const rotationGrid = <T,>(grid: T[][]): T[][] => {
+      return grid[0].map((_, i) => grid.map(row => row[i]).reverse());
     }
-    // 斜め方向（右下）
-    // 0行目から順に右下方向にlineを作成するのを4辺から行うと、全ての斜め方向lineを網羅できる
-    for (let row = 0; row < BOARD_SIZE; row++) {
-      boardAllLines.push([]);
-      for (let d = 0; d < BOARD_SIZE; d++) {
-        if (row + d < BOARD_SIZE) {
-          boardAllLines[boardAllLines.length - 1].push(grid[row + d][d]);
-        } else {
-          break;
+
+    // 宣言型に直せるが、可読性が落ちるためfor文で記載
+    for (let i = 0; i < 4; i++) {
+      // 縦横方向
+      if (i < 2) {
+        boardAllLines.push(...grid);
+      }
+      // 斜め方向（右下）
+      // 0行目から順に右下方向にlineを作成するのを4辺から行うと、全ての斜め方向lineを網羅できる
+      for (let row = 0; row < BOARD_SIZE; row++) {
+        boardAllLines.push([]);
+        for (let d = 0; d < BOARD_SIZE; d++) {
+          if (row + d < BOARD_SIZE) {
+            boardAllLines[boardAllLines.length - 1].push(grid[row + d][d]);
+          } else {
+            break;
+          }
         }
       }
+      grid = rotationGrid(grid);
     }
-    grid = rotationGrid(grid);
+    return boardAllLines;
   }
 
-  // 盤面上の全てのlineに対してCountし、最大値を取得
-  const mergedCounter: stoneCounter = boardAllLines.map(calculateCounterFromLine).reduce(mergeStoneCounter);
+  // 盤面上の全てのlineを取得し、それぞれのlineに対して数え上げをO(N)で行うため、全体の計算量はO(N^2)
+  // ただ、N: BORAD_SIZEに対して定数倍が大きいので注意。（実際の計算量はO(4N^2)程度）
+  // 参考：N=19のとき、line数=114, line中の石数=1482
+  const mergedCounter: stoneCounter = getAllLines(stoneKinds).map(calculateCounterFromLine).reduce(mergeStoneCounter);
 
-  if (mergedCounter.blackCntMax >= 5 && mergedCounter.whiteCntMax >= 5) {
-    // 両者5目以上ならんでいる場合、優先順位に従って勝者を決定
-    return blackPriority ? 'Black' : 'White';
-  } else if (mergedCounter.blackCntMax >= 5) {
+  const isBlackWin = mergedCounter.blackCntMax >= 5;
+  const isWhiteWin = mergedCounter.whiteCntMax >= 5;
+  const isTie = isBlackWin && isWhiteWin;
+
+  // 勝敗判定
+  if (isTie) {
+    return blackPriority ? 'Black' : 'White'; // 優先順位によって勝者を決定
+  } else if (isBlackWin) {
     return 'Black';
-  } else if (mergedCounter.whiteCntMax >= 5) {
+  } else if (isWhiteWin) {
     return 'White';
   } else {
     return null;
   }
-
 }
 
 export default Board;
