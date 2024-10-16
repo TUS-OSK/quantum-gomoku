@@ -136,10 +136,14 @@ const calculateWinner = (stoneKinds: (null | boolean)[], BOARD_SIZE: number, bla
   // lineの石の並びから連続する石の数をカウントする関数
   const calculateCounterFromLine = (line: (boolean | null)[]): stoneCounter => {
     // 連続する石の数を更新する関数
-    const updateStoneCount = (isCurrentKind: boolean, previousKind: boolean | null, maxCount: number, continuousCount: number): number => {
-      return isCurrentKind
-        ? (previousKind === isCurrentKind ? continuousCount + 1 : 1)
-        : maxCount;
+    const updateStoneCount = (isCurrentKind: boolean, isSamePreviousKind: boolean | null, maxCount: number, continuousCount: number): number => {
+      if (isSamePreviousKind) {
+        return Math.max(maxCount, continuousCount + 1);
+      } else if (isCurrentKind) {
+        return Math.max(maxCount, 1);
+      } else {
+        return maxCount;
+      }
     };
 
     return line.reduce((accumulator: stoneCounter, currentKind: boolean | null) => {
@@ -149,8 +153,8 @@ const calculateWinner = (stoneKinds: (null | boolean)[], BOARD_SIZE: number, bla
       }
 
       // 黒石と白石の連続カウントを更新
-      const newBlackCount = updateStoneCount(currentKind, accumulator.prevKind, accumulator.blackCntMax, accumulator.continuous);
-      const newWhiteCount = updateStoneCount(!currentKind, accumulator.prevKind, accumulator.whiteCntMax, accumulator.continuous);
+      const newBlackCount = updateStoneCount(currentKind, currentKind == accumulator.prevKind, accumulator.blackCntMax, accumulator.continuous);
+      const newWhiteCount = updateStoneCount(!currentKind, currentKind == accumulator.prevKind, accumulator.whiteCntMax, accumulator.continuous);
 
       return {
         blackCntMax: newBlackCount,
