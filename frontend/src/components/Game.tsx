@@ -4,13 +4,11 @@ import Board from './Board';
 /**
  * The `Game` component represents the main game interface for the Quantum Gomoku game.
  * It manages the game state, including the turn count and the size of the game board.
- * 
  * @component
  * @example
  * return (
  *   <Game />
  * )
- * 
  * @returns {JSX.Element} The rendered game component.
  */
 const Game: React.FC = () => {
