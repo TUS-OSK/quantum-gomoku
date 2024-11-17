@@ -48,6 +48,19 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) =>
   // Stone コンポーネントに渡すため、カリー化
   const curriedSetIthStoneKind = (i: number) => (stoneKind: boolean) => setIthStoneKind(i, stoneKind);
 
+  // 石の確率を管理
+  const [stoneProbabilities, setStoneProbabilities] = useState<(null | number)[]>(Array(BOARD_SIZE * BOARD_SIZE).fill(null));
+
+  const setStoneProbability = (i:number, probability:number) => {
+    setStoneProbabilities((prev) => {
+      const newStoneProbabilities = [...prev];
+      newStoneProbabilities[i] = probability;
+      return newStoneProbabilities;
+    })
+  }
+
+  const curriedSetStoneProbability = (i: number) => (probability: number) => setStoneProbability(i, probability);
+
   // stoneKindsを引数もつため、石が置かれるたびに下行が実行され勝敗判定が行われる
   // [WHY]
   // 量子五目並べでは両者5目並ぶことがあるため、どちらを優先するかを決める必要がある
@@ -84,6 +97,8 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) =>
               const isBottomCell = index >= BOARD_SIZE * (BOARD_SIZE - 1);
               // 石を置けるセルはhover時に色を変える
               const isBlankCell = stoneKind === null;
+              // 石の確率を取得
+              const Probability = stoneProbabilities[index];
               return (
                 <div
                   className={`border-black ${isRightCell ? '' : 'border-r'} ${isBottomCell ? '' : 'border-b'} ${isBlankCell ? 'hover:bg-slate-300' : ''}`}
@@ -91,9 +106,12 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) =>
                   <Stone
                     stoneKind={stoneKind}
                     setStoneKind={curriedSetIthStoneKind(index)}
+                    setStoneProbability={curriedSetStoneProbability(index)}
                     changeTurn={changeTurn}
                     blackIsNext={blackIsNext}
+                    stoneProbability={Probability}
                   />
+
                 </div>
               );
             })
