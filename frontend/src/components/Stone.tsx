@@ -26,6 +26,7 @@ const Stone: React.FC<StoneProps> = ({ stoneKind, stoneProbability, setStoneKind
   function onClick() {
     if (stoneKind === null) {
       setStoneKind(blackIsNext);
+      // 確率の設定の分岐が不十分なので、黒白それぞれ高低が必要
       if (blackIsNext) {
         setStoneProbability(70);
       } else {
