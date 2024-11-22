@@ -66,7 +66,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
   const [isObserved, setIsObserved] = useState<boolean>(false);
 
   const observation = () => {
-    const [newWinner, newObsevedStoneKinds] = calculateWinner(stoneProbabilities, BOARD_SIZE, blackIsNext);
+    const [newWinner, newObsevedStoneKinds] = calculateWinner(stoneProbabilities, BOARD_SIZE, !blackIsNext);
     setIsObserved(true);
     setWinner(newWinner);
     setObservedStoneKinds(newObsevedStoneKinds);
@@ -322,7 +322,7 @@ const calculateWinner = (stoneProbabilities: (null | number)[], BOARD_SIZE: numb
     if (probability === null) {
       return null;
     } else {
-      return Math.random() < probability / 100;
+      return Math.random() <= probability / 100;
     }
   });
   const mergedCounter: stoneCounter = getAllLines(observedStoneKinds).map(calculateCounterFromLine).reduce(mergeStoneCounter);
