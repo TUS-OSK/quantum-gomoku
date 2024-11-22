@@ -23,7 +23,7 @@ const Game: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="flex items-center min-h-screen">
         <Board
           BOARD_SIZE={BOARD_SIZE}
           turnCount={turnCount}

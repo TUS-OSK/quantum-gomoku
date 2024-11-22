@@ -71,52 +71,58 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
 
   return (
     <>
-      {/* 現在の手番の状況 */}
-      <div className="mb-5 flex justify-center items-center text-2xl font-bold">
-        {winner === null ? `Next player: ${(blackIsNext ? 'Black' : 'White') + ' ' + nextProbability + '%'}` : `Winner: ${winner}`}
-      </div>
-      {/* 盤面を適切に中央へ配置するdiv */}
-      <div
-        className="flex justify-center items-center"
-        style={{ minWidth: `${BOARD_SIZE * MINIMUM_CELL_SIZE_PX}px` }}
-      >
-        {/* 盤面をcssのgridで作成 */}
-        <div
-          className="grid border-2 border-black"
-          style={{
-            gridTemplateColumns: `repeat(${BOARD_SIZE}, minmax(${MINIMUM_CELL_SIZE_PX}px, ${MAXIMUM_CELL_SIZE_PX}px))`,
-            gridTemplateRows: `repeat(${BOARD_SIZE}, minmax(${MINIMUM_CELL_SIZE_PX}px, ${MAXIMUM_CELL_SIZE_PX}px))`,
-            width: '100%',
-            aspectRatio: '1',
-          }}
-        >
-          {
-            stoneProbabilities.map((stoneProbability, index) => {
-              // 罫線描画時に右端と下端の線は外枠と被るため、それぞれのセルに対して右端と下端の線を描画しない
-              const isRightCell = (index + 1) % BOARD_SIZE === 0;
-              const isBottomCell = index >= BOARD_SIZE * (BOARD_SIZE - 1);
-              // 石を置けるセルはhover時に色を変える
-              const isBlankCell = stoneProbability === null;
-              return (
-                <div
-                  className={`border-black ${isRightCell ? '' : 'border-r'} ${isBottomCell ? '' : 'border-b'} ${isBlankCell ? 'hover:bg-slate-300' : ''}`}
-                >
-                  <Stone
-                    stoneProbability={stoneProbability}
-                    setStoneProbability={curriedSetIthStoneProbability(index)}
-                    changeTurn={changeTurn}
-                    turnCount={turnCount}
-                  />
+      <div className='flex flex-row'>
 
-                </div>
-              );
-            })
-          }
+        {/* 盤面を適切に中央へ配置するdiv */}
+        <div
+          className="flex justify-center items-center"
+          style={{ minWidth: `${BOARD_SIZE * MINIMUM_CELL_SIZE_PX}px` }}
+        >
+          {/* 盤面をcssのgridで作成 */}
+          <div
+            className="grid border-2 border-black"
+            style={{
+              gridTemplateColumns: `repeat(${BOARD_SIZE}, minmax(${MINIMUM_CELL_SIZE_PX}px, ${MAXIMUM_CELL_SIZE_PX}px))`,
+              gridTemplateRows: `repeat(${BOARD_SIZE}, minmax(${MINIMUM_CELL_SIZE_PX}px, ${MAXIMUM_CELL_SIZE_PX}px))`,
+              width: '100%',
+              aspectRatio: '1',
+            }}
+          >
+            {
+              stoneProbabilities.map((stoneProbability, index) => {
+                // 罫線描画時に右端と下端の線は外枠と被るため、それぞれのセルに対して右端と下端の線を描画しない
+                const isRightCell = (index + 1) % BOARD_SIZE === 0;
+                const isBottomCell = index >= BOARD_SIZE * (BOARD_SIZE - 1);
+                // 石を置けるセルはhover時に色を変える
+                const isBlankCell = stoneProbability === null;
+                return (
+                  <div
+                    className={`border-black ${isRightCell ? '' : 'border-r'} ${isBottomCell ? '' : 'border-b'} ${isBlankCell ? 'hover:bg-slate-300' : ''}`}
+                  >
+                    <Stone
+                      stoneProbability={stoneProbability}
+                      setStoneProbability={curriedSetIthStoneProbability(index)}
+                      changeTurn={changeTurn}
+                      turnCount={turnCount}
+                    />
+
+                  </div>
+                );
+              })
+            }
+          </div>
+        </div>
+        {/* 現在の状況 */}
+        <div className='flex flex-col items-center justify-center ml-[100px] w-[30%]'>
+          <button className='mt-5 p-2 bg-blue-500 text-white rounded-md' onClick={observation}>
+            観測する
+          </button>
+          {/* 現在の手番の状況 */}
+          <div className="mb-5 flex justify-center items-center text-2xl font-bold">
+            {winner === null ? `Next player: ${(blackIsNext ? 'Black' : 'White') + ' ' + nextProbability + '%'}` : `Winner: ${winner}`}
+          </div>
         </div>
       </div>
-      <button className='mt-5 p-2 bg-blue-500 text-white rounded-md' onClick={observation}>
-        観測する
-      </button>
     </>
   );
 }
