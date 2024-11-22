@@ -3,7 +3,7 @@ import Stone from './Stone';
 
 type BoardProps = {
   BOARD_SIZE: number;
-  blackIsNext: boolean;
+  turnCount: number;
   changeTurn: () => void;
 }
 
@@ -12,7 +12,7 @@ type BoardProps = {
  *
  * @component
  * @param {number} BOARD_SIZE - The size of the board (number of cells per row/column).
- * @param {boolean} blackIsNext - Indicates if the next player is black.
+ * @param {number} turnCount - The number of turns that have passed in the game.
  * @param {() => void} changeTurn - Function to change the turn to the next player.
  *
  * @returns {JSX.Element} The rendered Board component.
@@ -22,13 +22,15 @@ type BoardProps = {
  *  <Board BOARD_SIZE={19} blackIsNext={true} changeTurn={handleChangeTurn} />
  * )
  */
-const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) => {
+const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
   // 盤面の人マスのサイズの最大・最小
   // [WYH]
   // 盤面状況（空のとき）やwindowサイズによってレイアウトがつぶれてしまうため
   // CSS苦手なのでより良い方法があれば、変更して欲しい
   const MINIMUM_CELL_SIZE_PX = 20;
   const MAXIMUM_CELL_SIZE_PX = 50;
+
+  const blackIsNext = turnCount % 2 === 0;
 
   // 盤面の石を一次元配列で管理 ( null: 空, true: 黒, false: 白 )
   // [WHY]
@@ -39,7 +41,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) =>
   // 石の確率を管理
   const [stoneProbabilities, setStoneProbabilities] = useState<(null | number)[]>(Array(BOARD_SIZE * BOARD_SIZE).fill(null));
 
-  const setIthStoneProbability = (i:number, probability:number) => {
+  const setIthStoneProbability = (i: number, probability: number) => {
     setStoneProbabilities((prev) => {
       const newStoneProbabilities = [...prev];
       newStoneProbabilities[i] = probability;
@@ -55,14 +57,15 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) =>
   // 量子化を想定して関数に優先順位を引数として渡している（現状は置いた人を優先）
   // [TODO]
   // 勝敗確定時に石を置けないようにする
-  const winner = "勝利判定はスキップしています";
+  const winner = null;
   // const winner = calculateWinner(stoneKinds, BOARD_SIZE, !blackIsNext);
+  const nextProbability = turnCount % 4 == 0 ? 90 : turnCount % 4 == 1 ? 10 : turnCount % 4 == 2 ? 70 : 30;
 
   return (
     <>
       {/* 現在の手番の状況 */}
       <div className="mb-5 flex justify-center items-center text-2xl font-bold">
-        {winner === null ? `Next player: ${blackIsNext ? 'Black' : 'White'}` : `Winner: ${winner}`}
+        {winner === null ? `Next player: ${(blackIsNext ? 'Black' : 'White') + ' ' + nextProbability + '%'}` : `Winner: ${winner}`}
       </div>
       {/* 盤面を適切に中央へ配置するdiv */}
       <div
@@ -94,7 +97,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) =>
                     stoneProbability={stoneProbability}
                     setStoneProbability={curriedSetIthStoneProbability(index)}
                     changeTurn={changeTurn}
-                    blackIsNext={blackIsNext}
+                    turnCount={turnCount}
                   />
 
                 </div>

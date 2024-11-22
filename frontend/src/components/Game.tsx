@@ -26,7 +26,7 @@ const Game: React.FC = () => {
       <div className="flex flex-col items-center justify-center min-h-screen">
         <Board
           BOARD_SIZE={BOARD_SIZE}
-          blackIsNext={turnCount % 2 === 0} // Black is the first player
+          turnCount={turnCount}
           changeTurn={changeTurn}
         />
       </div>

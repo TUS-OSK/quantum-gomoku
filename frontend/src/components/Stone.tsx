@@ -4,7 +4,7 @@ type StoneProps = {
   stoneProbability: number | null;
   setStoneProbability: (stoneProbability: number) => void;
   changeTurn: () => void;
-  blackIsNext: boolean;
+  turnCount: number;
 }
 
 /**
@@ -14,21 +14,26 @@ type StoneProps = {
  * @param {number | null} stoneProbability - The probability of the stone's color for black.
  * @param {() => void} setStoneProbability - Function to set the probability of the stone's color for black.
  * @param {function} changeTurn - Function to change the turn to the next player.
- * @param {boolean} blackIsNext - Boolean indicating if the next stone to be placed is black.
+ * @param {number} turnCount - The number of turns that have passed in the game.
  *
  * @returns {JSX.Element} A button element representing the stone.
  */
-const Stone: React.FC<StoneProps> = ({ stoneProbability, setStoneProbability, changeTurn, blackIsNext }) => {
+const Stone: React.FC<StoneProps> = ({ stoneProbability, setStoneProbability, changeTurn, turnCount }) => {
 
   function onClick() {
     if (stoneProbability === null) {
       // 確率の設定の分岐が不十分なので、黒白それぞれ高低が必要
-      if (blackIsNext) {
+      if (turnCount % 4 == 0) {
+        setStoneProbability(90);
+      } else if (turnCount % 4 == 1) {
+        setStoneProbability(10);
+      } else if (turnCount % 4 == 2) {
         setStoneProbability(70);
       } else {
         setStoneProbability(30);
       }
       changeTurn();
+      console.log("turnCount: ", turnCount);
     }
   }
 
@@ -46,12 +51,12 @@ const Stone: React.FC<StoneProps> = ({ stoneProbability, setStoneProbability, ch
         <div className="w-[85%] h-[85%] border border-black rounded-full flex items-center justify-center"
           style={{ backgroundColor: `hsl(0, 0%, ${100 - stoneProbability}%)` }}
         >
-              <div
-              className="text-center text-[1.5vw]"
-              style={{ color: stoneProbability >= 50 ? 'white' : 'black' }}
-              >
-              {stoneProbability}
-              </div>
+          <div
+            className="text-center text-[1vw]"
+            style={{ color: stoneProbability >= 50 ? 'white' : 'black' }}
+          >
+            {stoneProbability}
+          </div>
         </div>
       )}
     </button>
