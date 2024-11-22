@@ -105,6 +105,9 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
           }
         </div>
       </div>
+      <button className='mt-5 p-2 bg-blue-500 text-white rounded-md'>
+        観測する
+      </button>
     </>
   );
 }
