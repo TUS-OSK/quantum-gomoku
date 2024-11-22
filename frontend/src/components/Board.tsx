@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Stone from './Stone';
+import axios from 'axios';
 
 type BoardProps = {
   BOARD_SIZE: number;
@@ -71,6 +72,24 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
     setWinner(newWinner);
     setObservedStoneKinds(newObsevedStoneKinds);
   }
+
+  const fetchCpu = async () => {
+    console.log('fetching CPU move');
+    try {
+      const response = await axios.post('https://zsg2fubppucojtltrm2qldfejm0xxtmg.lambda-url.ap-northeast-1.on.aws/', {
+        stone_data: stoneProbabilities,
+        board_size: BOARD_SIZE,
+        next_stone: turnCount % 4 == 1 ? 10 : 30,
+      });
+      console.log(response);
+      const data = response.data;
+      setIthStoneProbability(data, turnCount % 4 == 1 ? 10 : 30);
+      changeTurn();
+      setDisplayState(0);
+    } catch (error) {
+      console.error('Error fetching CPU move:', error);
+    }
+  };
 
   const nextProbability = turnCount % 4 == 0 ? 90 : turnCount % 4 == 1 ? 10 : turnCount % 4 == 2 ? 70 : 30;
 
@@ -165,7 +184,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
                       <div className="w-px h-32 bg-gray-300 mx-4"></div>
                       <div className="flex-1 flex flex-col items-center gap-8">
                         <button className="w-[100px] h-[100px] text-2xl font-medium bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
-                          onClick={() => { setDisplayState(3) }}>
+                          onClick={() => { setDisplayState(3); fetchCpu()}}>
                           しない
                         </button>
                       </div>
@@ -182,7 +201,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
                     </div>
                     <div className="flex justify-center items-center">
                       <button className="w-[100px] h-[80px] text-2xl font-medium bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
-                        onClick={() => { setDisplayState(3); setIsObserved(false); }}>
+                        onClick={() => { setDisplayState(3); setIsObserved(false); fetchCpu();}}>
                         Next
                       </button>
                     </div>
