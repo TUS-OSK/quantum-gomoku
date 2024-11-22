@@ -182,7 +182,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
                     </div>
                     <div className="flex justify-center items-center">
                       <button className="w-[100px] h-[80px] text-2xl font-medium bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
-                        onClick={() => setDisplayState(3)}>
+                        onClick={() => { setDisplayState(3); setIsObserved(false); }}>
                         Next
                       </button>
                     </div>
