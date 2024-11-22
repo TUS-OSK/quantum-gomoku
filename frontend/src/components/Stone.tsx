@@ -43,19 +43,15 @@ const Stone: React.FC<StoneProps> = ({ stoneProbability, setStoneProbability, ch
       }}
     >
       {stoneProbability !== null && (
-        <div
-          className={`w-[85%] h-[85%] border border-black rounded-full`}
+        <div className="w-[85%] h-[85%] border border-black rounded-full flex items-center justify-center"
           style={{ backgroundColor: `hsl(0, 0%, ${100 - stoneProbability}%)` }}
         >
-          {stoneProbability !== null && (
-          <div
-            style={{
-            color: `hsl(0, 0%, ${stoneProbability}%)`, fontSize: '0.5rem',
-          }}
-          >
-            {stoneProbability}
-            </div>
-          )}
+              <div
+              className="text-center text-[1.5vw]"
+              style={{ color: stoneProbability >= 50 ? 'white' : 'black' }}
+              >
+              {stoneProbability}
+              </div>
         </div>
       )}
     </button>
