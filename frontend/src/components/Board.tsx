@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Stone from './Stone';
-import axios from 'axios';
+import CpuNextHand from './CpuNextHand';
 
 type BoardProps = {
   BOARD_SIZE: number;
@@ -72,26 +72,15 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
     setWinner(newWinner);
     setObservedStoneKinds(newObsevedStoneKinds);
   }
+  const nextStoneProbability = turnCount % 4 == 0 ? 90 : turnCount % 4 == 1 ? 10 : turnCount % 4 == 2 ? 70 : 30;
 
-  const fetchCpu = async () => {
-    console.log('fetching CPU move');
-    try {
-      const response = await axios.post('https://zsg2fubppucojtltrm2qldfejm0xxtmg.lambda-url.ap-northeast-1.on.aws/', {
-        stone_data: stoneProbabilities,
-        board_size: BOARD_SIZE,
-        next_stone: turnCount % 4 == 1 ? 10 : 30,
-      });
-      console.log(response);
-      const data = response.data;
-      setIthStoneProbability(data, turnCount % 4 == 1 ? 10 : 30);
-      changeTurn();
-      setDisplayState(0);
-    } catch (error) {
-      console.error('Error fetching CPU move:', error);
-    }
-  };
-
-  const nextProbability = turnCount % 4 == 0 ? 90 : turnCount % 4 == 1 ? 10 : turnCount % 4 == 2 ? 70 : 30;
+  const playCPU = async () => {
+    const cpuHand = CpuNextHand({ stoneProbabilities, boardSize: BOARD_SIZE, nextStoneProbability: nextStoneProbability });
+    await new Promise(r => setTimeout(r, 1000));
+    setIthStoneProbability(cpuHand, nextStoneProbability);
+    changeTurn();
+    setDisplayState(0);
+  }
 
   return (
     <>
@@ -164,7 +153,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
                   石を置いてください
                 </div>
                 <div className='mb-5 flex justify-center items-center text-xl font-bold'>
-                  {`次に置く石の確率: ${nextProbability}%`}
+                  {`次に置く石の確率: ${nextStoneProbability}%`}
                 </div>
               </>
             ) : displayState === 1 ? ( // プレーヤーが石を置いた状態
@@ -184,7 +173,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
                       <div className="w-px h-32 bg-gray-300 mx-4"></div>
                       <div className="flex-1 flex flex-col items-center gap-8">
                         <button className="w-[100px] h-[100px] text-2xl font-medium bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
-                          onClick={() => { setDisplayState(3); fetchCpu()}}>
+                          onClick={() => { setDisplayState(3); playCPU(); }}>
                           しない
                         </button>
                       </div>
@@ -201,7 +190,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
                     </div>
                     <div className="flex justify-center items-center">
                       <button className="w-[100px] h-[80px] text-2xl font-medium bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
-                        onClick={() => { setDisplayState(3); setIsObserved(false); fetchCpu();}}>
+                        onClick={() => { setDisplayState(3); setIsObserved(false); playCPU(); }}>
                         Next
                       </button>
                     </div>
@@ -226,7 +215,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
                   少々お待ちください
                 </div>
                 <div className='mb-5 flex justify-center items-center text-xl font-bold'>
-                  {`次に置く石の確率: ${nextProbability}%`}
+                  {`次に置く石の確率: ${nextStoneProbability}%`}
                 </div>
               </div>
             )}
