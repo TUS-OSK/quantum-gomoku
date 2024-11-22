@@ -1,9 +1,7 @@
 import React from "react";
 
 type StoneProps = {
-  stoneKind: boolean | null;
   stoneProbability: number | null;
-  setStoneKind: (stoneKind: boolean) => void;
   setStoneProbability: (stoneProbability: number) => void;
   changeTurn: () => void;
   blackIsNext: boolean;
@@ -13,19 +11,17 @@ type StoneProps = {
  * Stone component represents a single stone in the Gomoku game.
  *
  * @component
- * @param {boolean | null} stoneKind - The kind of the stone, `true` for black, `false` for white, and `null` for no stone.
  * @param {number | null} stoneProbability - The probability of the stone's color for black.
- * @param {function} setStoneKind - Function to set the kind of the stone.
+ * @param {() => void} setStoneProbability - Function to set the probability of the stone's color for black.
  * @param {function} changeTurn - Function to change the turn to the next player.
  * @param {boolean} blackIsNext - Boolean indicating if the next stone to be placed is black.
  *
  * @returns {JSX.Element} A button element representing the stone.
  */
-const Stone: React.FC<StoneProps> = ({ stoneKind, stoneProbability, setStoneKind, setStoneProbability, changeTurn, blackIsNext }) => {
+const Stone: React.FC<StoneProps> = ({ stoneProbability, setStoneProbability, changeTurn, blackIsNext }) => {
 
   function onClick() {
-    if (stoneKind === null) {
-      setStoneKind(blackIsNext);
+    if (stoneProbability === null) {
       // 確率の設定の分岐が不十分なので、黒白それぞれ高低が必要
       if (blackIsNext) {
         setStoneProbability(70);
@@ -46,9 +42,10 @@ const Stone: React.FC<StoneProps> = ({ stoneKind, stoneProbability, setStoneKind
         justifyContent: 'center',
       }}
     >
-      {stoneKind !== null && (
+      {stoneProbability !== null && (
         <div
-          className={`w-[85%] h-[85%] border border-black rounded-full ${stoneKind ? 'bg-black' : 'bg-white'}`}
+          className={`w-[85%] h-[85%] border border-black rounded-full`}
+          style={{ backgroundColor: `hsl(0, 0%, ${100 - stoneProbability}%)` }}
         >
           {stoneProbability !== null && (
           <div
