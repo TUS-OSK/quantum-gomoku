@@ -55,7 +55,7 @@ const Stone: React.FC<StoneProps> = ({ stoneProbability, setStoneProbability, ch
             className="text-center text-[1vw]"
             style={{ color: stoneProbability >= 50 ? 'white' : 'black' }}
           >
-            {stoneProbability}
+            {Math.floor(stoneProbability/10)}
           </div>
         </div>
       )}
