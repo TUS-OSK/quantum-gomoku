@@ -5,6 +5,7 @@ type StoneProps = {
   setStoneProbability: (stoneProbability: number) => void;
   changeTurn: () => void;
   turnCount: number;
+  changeDisplayState: () => void;
 }
 
 /**
@@ -15,10 +16,11 @@ type StoneProps = {
  * @param {() => void} setStoneProbability - Function to set the probability of the stone's color for black.
  * @param {function} changeTurn - Function to change the turn to the next player.
  * @param {number} turnCount - The number of turns that have passed in the game.
+ * @param {() => void} changeDisplayState - Function to change the display state of the game.
  *
  * @returns {JSX.Element} A button element representing the stone.
  */
-const Stone: React.FC<StoneProps> = ({ stoneProbability, setStoneProbability, changeTurn, turnCount }) => {
+const Stone: React.FC<StoneProps> = ({ stoneProbability, setStoneProbability, changeTurn, turnCount, changeDisplayState }) => {
 
   function onClick() {
     if (stoneProbability === null) {
@@ -33,6 +35,7 @@ const Stone: React.FC<StoneProps> = ({ stoneProbability, setStoneProbability, ch
         setStoneProbability(30);
       }
       changeTurn();
+      changeDisplayState();
       console.log("turnCount: ", turnCount);
     }
   }
@@ -55,7 +58,7 @@ const Stone: React.FC<StoneProps> = ({ stoneProbability, setStoneProbability, ch
             className="text-center text-[1vw]"
             style={{ color: stoneProbability >= 50 ? 'white' : 'black' }}
           >
-            {Math.floor(stoneProbability/10)}
+            {Math.floor(stoneProbability / 10)}
           </div>
         </div>
       )}

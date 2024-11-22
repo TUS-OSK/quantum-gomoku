@@ -31,7 +31,8 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
   const MAXIMUM_CELL_SIZE_PX = 50;
 
   const blackIsNext = turnCount % 2 === 0;
-  const displayState = turnCount % 4;
+
+  const [displayState, setDisplayState] = useState<number>(0);
 
   // 盤面の石を一次元配列で管理 ( null: 空, true: 黒, false: 白 )
   // [WHY]
@@ -105,6 +106,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
                       setStoneProbability={curriedSetIthStoneProbability(index)}
                       changeTurn={changeTurn}
                       turnCount={turnCount}
+                      changeDisplayState={() => setDisplayState(1)}
                     />
 
                   </div>
@@ -117,7 +119,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
         <div className='flex flex-col items-center justify-center ml-[100px] w-[35%]'>
           {/* 現在の手番の状況 */}
           <div className="mb-2 flex justify-center items-center text-3xl font-bold">
-            {winner === null ? `${(blackIsNext ? 'あなた（黒）' : 'CPU（白）') + 'の手番です'}` : `Winner: ${winner}`}
+            {winner === null ? `${(blackIsNext ? 'あなた（黒）' : 'CPU（白）') + 'の手番です'}` : `勝者: ${winner}`}
           </div>
           {
             displayState === 0 ? ( // プレーヤーが石を置く状態
@@ -138,13 +140,15 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
                   <div className="flex flex-col items-center justify-center">
                     <div className="flex w-full items-center">
                       <div className="flex-1 flex flex-col items-center gap-8">
-                        <button className="w-[100px] h-[100px] text-2xl font-medium bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        <button className="w-[100px] h-[100px] text-2xl font-medium bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                          onClick={() => { observation(); setDisplayState(2); }}>
                           する
                         </button>
                       </div>
                       <div className="w-px h-32 bg-gray-300 mx-4"></div>
                       <div className="flex-1 flex flex-col items-center gap-8">
-                        <button className="w-[100px] h-[100px] text-2xl font-medium bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        <button className="w-[100px] h-[100px] text-2xl font-medium bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                          onClick={() => { setDisplayState(3) }}>
                           しない
                         </button>
                       </div>
@@ -155,19 +159,30 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
             ) : displayState === 2 ? ( // 観測した状態
               <>
                 {winner === null ? (
-                  <div className='mb-5 flex justify-center items-center text-3xl font-bold'>
-                    勝敗が決まりませんでした。
-                  </div>
+                  <>
+                    <div className='mb-5 flex justify-center items-center text-3xl font-bold'>
+                      勝敗が決まりませんでした。
+                    </div>
+                    <div className="flex justify-center items-center">
+                      <button className="w-[100px] h-[80px] text-2xl font-medium bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                        onClick={() => setDisplayState(3)}>
+                        Next
+                      </button>
+                    </div>
+                  </>
                 ) : (
-                  <div className='mb-5 flex justify-center items-center text-3xl font-bold'>
-                    勝者: {winner}
-                  </div>
+                  <>
+                    <div className='mb-5 flex justify-center items-center text-3xl font-bold'>
+                      勝者: {winner}
+                    </div>
+                    <div className="flex justify-center items-center">
+                      <button className="w-[100px] h-[80px] text-2xl font-medium bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                        onClick={() => setDisplayState(3)}>
+                        Next
+                      </button>
+                    </div>
+                  </>
                 )}
-                <div className="flex justify-center items-center">
-                  <button className="w-[100px] h-[100px] text-2xl font-medium bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                    OK
-                  </button>
-                </div>
               </>
             ) : ( // CPUのターン
               <div>
