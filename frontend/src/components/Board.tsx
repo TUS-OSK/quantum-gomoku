@@ -99,7 +99,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
                 const isRightCell = (index + 1) % BOARD_SIZE === 0;
                 const isBottomCell = index >= BOARD_SIZE * (BOARD_SIZE - 1);
                 // 石を置けるセルはhover時に色を変える
-                const isBlankCell = stoneProbability === null;
+                const isBlankCell = isObserved ? false : stoneProbability === null;
                 return (
                   <div
                     className={`border-black ${isRightCell ? '' : 'border-r'} ${isBottomCell ? '' : 'border-b'} ${isBlankCell ? 'hover:bg-slate-300' : ''}`}
