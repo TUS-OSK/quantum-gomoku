@@ -57,7 +57,16 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
   // 量子化を想定して関数に優先順位を引数として渡している（現状は置いた人を優先）
   // [TODO]
   // 勝敗確定時に石を置けないようにする
-  const winner = calculateWinner(stoneProbabilities, BOARD_SIZE, !blackIsNext);
+
+  const [winner, setWinner] = useState<null | string>(null);
+
+  const observation = () => {
+    const newWinner = calculateWinner(stoneProbabilities, BOARD_SIZE, blackIsNext);
+    if (newWinner !== null) {
+      setWinner(newWinner);
+    }
+  }
+
   const nextProbability = turnCount % 4 == 0 ? 90 : turnCount % 4 == 1 ? 10 : turnCount % 4 == 2 ? 70 : 30;
 
   return (
@@ -105,7 +114,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
           }
         </div>
       </div>
-      <button className='mt-5 p-2 bg-blue-500 text-white rounded-md'>
+      <button className='mt-5 p-2 bg-blue-500 text-white rounded-md' onClick={observation}>
         観測する
       </button>
     </>
