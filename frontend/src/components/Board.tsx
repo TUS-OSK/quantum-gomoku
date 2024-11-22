@@ -41,7 +41,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
   // 石の確率を管理
   const [stoneProbabilities, setStoneProbabilities] = useState<(null | number)[]>(Array(BOARD_SIZE * BOARD_SIZE).fill(null));
 
-  const setIthStoneProbability = (i:number, probability:number) => {
+  const setIthStoneProbability = (i: number, probability: number) => {
     setStoneProbabilities((prev) => {
       const newStoneProbabilities = [...prev];
       newStoneProbabilities[i] = probability;
@@ -57,14 +57,15 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
   // 量子化を想定して関数に優先順位を引数として渡している（現状は置いた人を優先）
   // [TODO]
   // 勝敗確定時に石を置けないようにする
-  const winner = "勝利判定はスキップしています";
+  const winner = null;
   // const winner = calculateWinner(stoneKinds, BOARD_SIZE, !blackIsNext);
+  const nextProbability = turnCount % 4 == 0 ? 90 : turnCount % 4 == 1 ? 10 : turnCount % 4 == 2 ? 70 : 30;
 
   return (
     <>
       {/* 現在の手番の状況 */}
       <div className="mb-5 flex justify-center items-center text-2xl font-bold">
-        {winner === null ? `Next player: ${blackIsNext ? 'Black' : 'White'}` : `Winner: ${winner}`}
+        {winner === null ? `Next player: ${(blackIsNext ? 'Black' : 'White') + ' ' + nextProbability + '%'}` : `Winner: ${winner}`}
       </div>
       {/* 盤面を適切に中央へ配置するdiv */}
       <div
