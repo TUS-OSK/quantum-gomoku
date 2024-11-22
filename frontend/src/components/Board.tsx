@@ -3,7 +3,7 @@ import Stone from './Stone';
 
 type BoardProps = {
   BOARD_SIZE: number;
-  blackIsNext: boolean;
+  turnCount: number;
   changeTurn: () => void;
 }
 
@@ -12,7 +12,7 @@ type BoardProps = {
  *
  * @component
  * @param {number} BOARD_SIZE - The size of the board (number of cells per row/column).
- * @param {boolean} blackIsNext - Indicates if the next player is black.
+ * @param {number} turnCount - The number of turns that have passed in the game.
  * @param {() => void} changeTurn - Function to change the turn to the next player.
  *
  * @returns {JSX.Element} The rendered Board component.
@@ -22,13 +22,15 @@ type BoardProps = {
  *  <Board BOARD_SIZE={19} blackIsNext={true} changeTurn={handleChangeTurn} />
  * )
  */
-const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) => {
+const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
   // 盤面の人マスのサイズの最大・最小
   // [WYH]
   // 盤面状況（空のとき）やwindowサイズによってレイアウトがつぶれてしまうため
   // CSS苦手なのでより良い方法があれば、変更して欲しい
   const MINIMUM_CELL_SIZE_PX = 20;
   const MAXIMUM_CELL_SIZE_PX = 50;
+
+  const blackIsNext = turnCount % 2 === 0;
 
   // 盤面の石を一次元配列で管理 ( null: 空, true: 黒, false: 白 )
   // [WHY]
@@ -94,7 +96,7 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, blackIsNext, changeTurn }) =>
                     stoneProbability={stoneProbability}
                     setStoneProbability={curriedSetIthStoneProbability(index)}
                     changeTurn={changeTurn}
-                    blackIsNext={blackIsNext}
+                    turnCount={turnCount}
                   />
 
                 </div>
