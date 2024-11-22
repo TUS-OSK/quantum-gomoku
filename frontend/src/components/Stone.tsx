@@ -1,7 +1,7 @@
 import React from "react";
 
 type StoneProps = {
-  stoneProbability: number | null;
+  stoneProbability: number | null | boolean;
   setStoneProbability: (stoneProbability: number) => void;
   changeTurn: () => void;
   turnCount: number;
@@ -50,18 +50,23 @@ const Stone: React.FC<StoneProps> = ({ stoneProbability, setStoneProbability, ch
         justifyContent: 'center',
       }}
     >
-      {stoneProbability !== null && (
-        <div className="w-[85%] h-[85%] border border-black rounded-full flex items-center justify-center"
-          style={{ backgroundColor: `hsl(0, 0%, ${100 - stoneProbability}%)` }}
-        >
-          <div
-            className="text-center text-[1vw]"
-            style={{ color: stoneProbability >= 50 ? 'white' : 'black' }}
+      {
+        typeof stoneProbability === 'number' ? (
+          <div className="w-[85%] h-[85%] border border-black rounded-full flex items-center justify-center"
+            style={{ backgroundColor: `hsl(0, 0%, ${100 - stoneProbability}%)` }}
           >
-            {Math.floor(stoneProbability / 10)}
+            <div
+              className="text-center text-[1vw]"
+              style={{ color: stoneProbability >= 50 ? 'white' : 'black' }}
+            >
+              {Math.floor(stoneProbability / 10)}
+            </div>
           </div>
-        </div>
-      )}
+        ) : typeof stoneProbability === 'boolean' ? (
+          <div className={`w-[85%] h-[85%] border border-black rounded-full flex items-center justify-center ${stoneProbability ? 'bg-black' : 'bg-white'}`}>
+          </div>
+        ) : null
+      }
     </button>
   );
 }

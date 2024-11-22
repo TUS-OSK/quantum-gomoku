@@ -62,11 +62,14 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
 
   const [winner, setWinner] = useState<null | string>(null);
 
+  const [observedStoneKinds, setObservedStoneKinds] = useState<(null | boolean)[]>(Array(BOARD_SIZE * BOARD_SIZE).fill(null));
+  const [isObserved, setIsObserved] = useState<boolean>(false);
+
   const observation = () => {
-    const newWinner = calculateWinner(stoneProbabilities, BOARD_SIZE, blackIsNext);
-    if (newWinner !== null) {
-      setWinner(newWinner);
-    }
+    const [newWinner, newObsevedStoneKinds] = calculateWinner(stoneProbabilities, BOARD_SIZE, blackIsNext);
+    setIsObserved(true);
+    setWinner(newWinner);
+    setObservedStoneKinds(newObsevedStoneKinds);
   }
 
   const nextProbability = turnCount % 4 == 0 ? 90 : turnCount % 4 == 1 ? 10 : turnCount % 4 == 2 ? 70 : 30;
@@ -101,13 +104,27 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
                   <div
                     className={`border-black ${isRightCell ? '' : 'border-r'} ${isBottomCell ? '' : 'border-b'} ${isBlankCell ? 'hover:bg-slate-300' : ''}`}
                   >
-                    <Stone
-                      stoneProbability={stoneProbability}
-                      setStoneProbability={curriedSetIthStoneProbability(index)}
-                      changeTurn={changeTurn}
-                      turnCount={turnCount}
-                      changeDisplayState={() => setDisplayState(1)}
-                    />
+                    {
+                      isObserved ? (
+                        <Stone
+                          stoneProbability={observedStoneKinds[index]}
+                          setStoneProbability={() => { }}
+                          changeTurn={() => { }}
+                          turnCount={turnCount}
+                          changeDisplayState={() => { }}
+                        />
+
+                      ) : (
+                        <Stone
+                          stoneProbability={stoneProbability}
+                          setStoneProbability={curriedSetIthStoneProbability(index)}
+                          changeTurn={changeTurn}
+                          turnCount={turnCount}
+                          changeDisplayState={() => setDisplayState(1)}
+                        />
+                      )
+
+                    }
 
                   </div>
                 );
@@ -208,9 +225,9 @@ const Board: React.FC<BoardProps> = ({ BOARD_SIZE, turnCount, changeTurn }) => {
  * @param {number} BOARD_SIZE - The size of the board (number of cells per row/column).
  * @param {boolean} blackPriority - Indicates if black has priority in case of a tie.
  *
- * @returns {null | string} The winner of the game ('Black' or 'White'), or null if there is no winner yet.
+ * @returns {null | string, (null | boolean)[]} A tuple containing the winner of the game and the state of each cell on the board.
  */
-const calculateWinner = (stoneProbabilities: (null | number)[], BOARD_SIZE: number, blackPriority: boolean): null | string => {
+const calculateWinner = (stoneProbabilities: (null | number)[], BOARD_SIZE: number, blackPriority: boolean): [null | string, (null | boolean)[]] => {
 
   // 各line毎に連続する石の数をカウントする
   type stoneCounter = {
@@ -316,13 +333,13 @@ const calculateWinner = (stoneProbabilities: (null | number)[], BOARD_SIZE: numb
 
   // 勝敗判定
   if (isTie) {
-    return blackPriority ? 'Black' : 'White'; // 優先順位によって勝者を決定
+    return [blackPriority ? 'Black' : 'White', observedStoneKinds]; // 優先順位によって勝者を決定
   } else if (isBlackWin) {
-    return 'Black';
+    return ['Black', observedStoneKinds];
   } else if (isWhiteWin) {
-    return 'White';
+    return ['White', observedStoneKinds];
   } else {
-    return null;
+    return [null, observedStoneKinds];
   }
 }
 
