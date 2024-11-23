@@ -87,11 +87,11 @@ const CpuNextHand = ({ stoneProbabilities, boardSize, nextStoneProbability }: Cp
                     playerWinEvaluateValue /= D.shift()!;
                 }
             } else {
-                let cpuWinEvaluateValue = 1;
-                let playerWinEvaluateValue = 1;
+                let cpuWinEvaluateValue = 100 - nextStoneProbability;
+                let playerWinEvaluateValue = nextNextStoneProbability;
                 for (const l of line) {
                     cpuWinEvaluateValue *= 100 - l;
-                    playerWinEvaluateValue *= centerIdx === 0 ? nextNextStoneProbability : l;
+                    playerWinEvaluateValue *= l;
                 }
                 if (maxEvaluationValue < cpuWinEvaluateValue + playerWinEvaluateValue) {
                     maxEvaluationValue = cpuWinEvaluateValue + playerWinEvaluateValue;
