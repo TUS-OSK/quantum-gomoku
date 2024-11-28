@@ -1,4 +1,4 @@
-module sample
+module gomoku
 
 go 1.22.6
 
